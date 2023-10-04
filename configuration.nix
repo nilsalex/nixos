@@ -5,7 +5,7 @@
 { config, pkgs, ... }:
 
 let
-  unstable = import  <nixos-unstable> {};
+  unstable = import <nixos-unstable> {};
 in
 {
   imports =
@@ -16,6 +16,8 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  hardware.firmware = [ pkgs.firmwareLinuxNonfree pkgs.sof-firmware ];
 
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
