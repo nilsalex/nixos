@@ -1,0 +1,460 @@
+{ config, pkgs, ... }:
+
+let
+  configure-gtk = pkgs.writeTextFile {
+    name = "configure-gtk";
+    destination = "/bin/configure-gtk";
+    executable = true;
+
+    text = let
+      schema = pkgs.gsettings-desktop-schemas;
+      datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+    in ''
+      export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+      gnome_schema=org.gnome.desktop.interface
+      gsettings set $gnome_schema gtk-theme 'Adwaita-dark'
+      gsettings set $gnome_schema color-scheme 'prefer-dark'
+    '';
+  };
+
+in {
+  home.username = "nils";
+  home.homeDirectory = "/home/nils";
+
+  home.stateVersion = "23.05";
+
+  home.packages = with pkgs; [
+    google-chrome
+    pulseaudio
+    pavucontrol
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    bemenu
+    blender
+    magic-wormhole
+    prusa-slicer
+    gcc
+    dejavu_fonts
+    font-awesome
+    openmoji-color
+    ripgrep
+    fd
+    gnumake
+    unzip
+    wget
+    tree-sitter
+    wl-clipboard
+    lua-language-server
+    texlive.combined.scheme-medium
+    mupdf
+    nodePackages.typescript-language-server
+    zoom-us
+    xdg_utils
+    slack
+    rnix-lsp
+    xdg-desktop-portal
+    xdg-desktop-portal-wlr
+    xdg-desktop-portal-gtk
+    glib
+    gsettings-desktop-schemas
+    libappindicator
+    configure-gtk
+    gopass
+    gopass-jsonapi
+    thunderbird
+    yubikey-manager
+    solaar
+  ];
+  
+  home.sessionVariables = let
+    schema = pkgs.gsettings-desktop-schemas;
+    schemadir = "${schema}/share/gsettings-schemas/${schema.name}";
+  in {
+    NIXOS_OZONE_WL = "1";
+    XDG_DATA_DIRS = schemadir + '':$XDG_DATA_DIRS'';
+  };
+
+  home.shellAliases = {
+    sway = "sway > ~/.local/var/log/sway.log 2>&1";
+  };
+
+  fonts.fontconfig.enable = true;
+
+  programs.home-manager.enable = true;
+
+  programs.bash = {
+    enable = true;
+    enableVteIntegration = true;
+    initExtra = ''
+      export PS1='[\u@\h \W]\n\$ '
+    '';
+  };
+
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "FiraCode Nerd Font";
+    };
+    theme = "One Dark";
+  };
+
+  programs.git = {
+    enable = true;
+    userEmail = "nils@famalex.de";
+    userName = "Nils Alex";
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+    };
+  };
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    vimAlias = true;
+  };
+
+  services.gpg-agent.enable = true;
+
+  programs.gpg.enable = true;
+
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      color = "000000";
+    };
+  };
+
+  programs.waybar = {
+    enable = true;
+    settings = [
+      (builtins.fromJSON ''
+{
+  "position": "bottom",
+  "height": 16,
+  "spacing": 4,
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode",
+    "sway/scratchpad",
+    "custom/media"
+  ],
+  "modules-center": [
+    "sway/window"
+  ],
+  "modules-right": [
+    "mpd",
+    "idle_inhibitor",
+    "pulseaudio",
+    "network",
+    "cpu",
+    "memory",
+    "keyboard-state",
+    "sway/language",
+    "battery",
+    "battery#bat2",
+    "clock",
+    "tray"
+  ],
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "{name} {icon}",
+    "format-icons": {
+      "locked": "",
+      "unlocked": ""
+    }
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+  "sway/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": [
+      "",
+      ""
+    ],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
+  },
+  "mpd": {
+    "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+    "format-disconnected": "Disconnected ",
+    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+    "unknown-tag": "N/A",
+    "interval": 2,
+    "consume-icons": {
+      "on": " "
+    },
+    "random-icons": {
+      "off": "<span color=\"#f53c3c\"></span> ",
+      "on": " "
+    },
+    "repeat-icons": {
+      "on": " "
+    },
+    "single-icons": {
+      "on": "1 "
+    },
+    "state-icons": {
+      "paused": "",
+      "playing": ""
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "tray": {
+    "spacing": 10
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": "{usage}% ",
+    "tooltip": false
+  },
+  "memory": {
+    "format": "{}% "
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% ",
+    "format-plugged": "{capacity}% ",
+    "format-alt": "{time} {icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "battery#bat2": {
+    "bat": "BAT2"
+  },
+  "network": {
+    "format-wifi": "{essid} ({signalStrength}%) ",
+    "format-ethernet": "{ipaddr}/{cidr} ",
+    "tooltip-format": "{ifname} via {gwaddr} ",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "Disconnected ⚠",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol"
+  },
+  "custom/media": {
+    "format": "{icon} {}",
+    "return-type": "json",
+    "max-length": 40,
+    "format-icons": {
+      "spotify": "",
+      "default": "🎜"
+    },
+    "escape": true,
+    "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+  }
+}
+      '')
+    ];
+  };
+
+  services.swayidle = {
+    enable = true;
+    # timeouts = [
+    #   { timeout = 15; command = ''swaymsg "output * dpms off"''; resumeCommand = ''swaymsg "output * dpms on"''; }
+    # ];
+  };
+
+  services.kanshi = {
+    enable = false;
+    profiles = {
+      undocked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            status = "enable";
+            position = "0,0";
+          }
+        ];
+      };
+      docked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+          {
+            criteria = "Dell Inc. DELL U2719D 92WTV13";
+            status = "enable";
+            position = "0,0";
+          }
+          {
+            criteria = "Dell Inc. DELL U2719D FHMTLS2";
+            status = "enable";
+            position = "2560,0";
+          }
+        ];
+      };
+    };
+  };
+
+  services.mako.enable = true;
+
+  wayland.windowManager.sway = {
+    enable = true;
+    config = {
+      modifier = "Mod4";
+      terminal = "kitty";
+      input = {
+        "*" = {
+          xkb_numlock = "enabled";
+          xkb_options = "compose:ralt";
+        };
+      };
+      output = {
+        eDP-1 = {
+          scale = "1.3";
+        };
+      };
+      menu = "bemenu-run";
+      fonts = {
+        names = [ "FiraCode Nerd Font" ];
+      };
+      bars = [
+        {
+          command = "${pkgs.waybar}/bin/waybar";
+        }
+      ];
+      floating.titlebar = false;
+      window.titlebar = false;
+    };
+    extraConfig = ''
+      # Extra workspace "0"
+      bindsym Mod4+0 workspace number 0
+      bindsym Mod4+Shift+0 move container to workspace number 0
+
+      # Move workspaces
+      bindsym Mod4+Control+Shift+l move workspace to output right
+      bindsym Mod4+Control+Shift+h move workspace to output left
+
+      # Brightness
+      bindsym XF86MonBrightnessDown exec light -U 5
+      bindsym XF86MonBrightnessUp exec light -A 5
+
+      # Volume
+      bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
+      bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
+      bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+
+      # Locking
+      bindsym Mod4+Shift+s exec swaylock
+
+      # Set output for docked/undocked mode
+      bindsym Mod4+Shift+d exec swaymsg 'output "Dell Inc. DELL U2719D 92WTV13" position 0 0' && swaymsg 'output "Dell Inc. DELL U2719D FHMTLS2" position 2560 0' && swaymsg 'output eDP-1 disable'
+      bindsym Mod4+Shift+u exec swaymsg 'output "eDP-1" enable'
+
+      # # restart stuff
+      # exec systemctl --user stop pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
+      # exec systemctl --user start pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
+
+      # configure gtk
+      exec configure-gtk
+    '';
+    wrapperFeatures = {
+      base = true;
+      gtk = true;
+    };
+  };
+
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+    };
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.gnome.adwaita-icon-theme;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+  };
+
+  programs.ssh.enable = true;
+
+  home.file.".config/gopass/gopass_wrapper.sh" = {
+    text = ''
+#!/bin/sh
+
+export GPG_TTY="$(tty)"
+
+if [ -f ~/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
+	source ~/.gpg-agent-info
+	export GPG_AGENT_INFO
+else
+	eval $(gpg-agent --daemon)
+fi
+
+/home/nils/.nix-profile/bin/gopass-jsonapi listen
+
+exit $?
+  '';
+    executable = true;
+  };
+
+  home.file.".config/google-chrome/NativeMessagingHosts/com.justwatch.gopass.json".text = ''
+{
+  "name": "com.justwatch.gopass",
+  "description": "Gopass wrapper to search and return passwords",
+  "path": "/home/nils/.config/gopass/gopass_wrapper.sh",
+  "type": "stdio",
+  "allowed_origins": [
+      "chrome-extension://kkhfnlkhiapbiehimabddjbimfaijdhk/"
+  ]
+}
+  '';
+}
