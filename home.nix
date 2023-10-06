@@ -63,6 +63,8 @@ in {
     thunderbird
     yubikey-manager
     solaar
+    dig
+    htop
   ];
   
   home.sessionVariables = let
@@ -293,9 +295,23 @@ in {
 
   services.swayidle = {
     enable = true;
-    # timeouts = [
-    #   { timeout = 15; command = ''swaymsg "output * dpms off"''; resumeCommand = ''swaymsg "output * dpms on"''; }
-    # ];
+    events = [
+      {
+        event = "before-sleep";
+        command = "${pkgs.swaylock}/bin/swaylock";
+      }
+    ];
+    timeouts = [
+      {
+        timeout = 120;
+        command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
+        resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+      }
+      {
+        timeout = 300;
+        command = "${pkgs.swaylock}/bin/swaylock -f";
+      }
+    ];
   };
 
   services.kanshi = {
@@ -439,7 +455,7 @@ else
 	eval $(gpg-agent --daemon)
 fi
 
-/home/nils/.nix-profile/bin/gopass-jsonapi listen
+${pkgs.gopass-jsonapi}/bin/gopass-jsonapi listen
 
 exit $?
   '';
