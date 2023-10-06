@@ -93,11 +93,13 @@
     ];
   };
 
-  nix.settings.allowed-users = [ "nils" ];
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
+  nix = {
+    package = pkgs.nixFlakes;
+    settings.allowed-users = [ "nils" ];
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
