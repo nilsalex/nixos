@@ -298,7 +298,7 @@ in {
     events = [
       {
         event = "before-sleep";
-        command = "${pkgs.swaylock}/bin/swaylock";
+        command = "${pkgs.swaylock}/bin/swaylock -f";
       }
     ];
     timeouts = [
@@ -347,7 +347,10 @@ in {
     };
   };
 
-  services.mako.enable = true;
+  services.mako = {
+    enable = true;
+    defaultTimeout = 30000;
+  };
 
   wayland.windowManager.sway = {
     enable = true;
@@ -378,9 +381,9 @@ in {
       window.titlebar = false;
     };
     extraConfig = ''
-      # Extra workspace "0"
-      bindsym Mod4+0 workspace number 0
-      bindsym Mod4+Shift+0 move container to workspace number 0
+      # Extra workspace "10"
+      bindsym Mod4+0 workspace number 10
+      bindsym Mod4+Shift+0 move container to workspace number 10
 
       # Move workspaces
       bindsym Mod4+Control+Shift+l move workspace to output right
