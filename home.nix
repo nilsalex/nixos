@@ -356,7 +356,7 @@ in {
     enable = true;
     config = {
       modifier = "Mod4";
-      terminal = "kitty";
+      terminal = "kitty -d $(${pkgs.swaycwd}/bin/swaycwd)";
       input = {
         "*" = {
           xkb_numlock = "enabled";
