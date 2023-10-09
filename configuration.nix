@@ -129,6 +129,14 @@
     pulse.enable = true;
   };
 
+  # environment.etc."pipewire/pipewire.conf".text = ''
+  # context.properties = {
+  #   default.clock.quantum     = 2048
+  #   default.clock.min-quantum = 1024
+  #   default.clock.max-quantum = 4096
+  # }
+  # '';
+
   services.fwupd.enable = true;
 
   services.acpid.enable = true;
@@ -147,6 +155,8 @@
   };
 
   services.pcscd.enable = true;
+
+  services.blueman.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

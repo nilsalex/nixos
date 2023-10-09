@@ -476,4 +476,15 @@ exit $?
   ]
 }
   '';
+
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      vscodevim.vim
+    ];
+  };
+
+  services.blueman-applet.enable = true;
+  services.network-manager-applet.enable = true;
 }
