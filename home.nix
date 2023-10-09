@@ -47,6 +47,7 @@ in {
     texlive.combined.scheme-medium
     mupdf
     nodePackages.typescript-language-server
+    zoom-us
     xdg_utils
     slack
     rnix-lsp
