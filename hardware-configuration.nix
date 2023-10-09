@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.initrd.luks.devices.crypted.device = "/dev/disk/by-uuid/69d05996-5ce0-477d-b639-85273b1019da";
   boot.kernelModules = [ "kvm-intel" ];
