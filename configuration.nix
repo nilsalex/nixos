@@ -27,6 +27,10 @@
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
 
+  powerManagement.enable = true;
+  services.thermald.enable = true;
+  services.tlp.enable = true;
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
