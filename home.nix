@@ -65,6 +65,7 @@ in {
     solaar
     dig
     htop
+    feh
   ];
   
   home.sessionVariables = let
