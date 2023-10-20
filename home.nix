@@ -66,6 +66,9 @@ in {
     dig
     htop
     feh
+    grim
+    slurp
+    gimp
   ];
   
   home.sessionVariables = let
