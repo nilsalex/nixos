@@ -122,7 +122,11 @@ in {
     vimAlias = true;
   };
 
-  services.gpg-agent.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 86400;
+    maxCacheTtl = 86400;
+  };
 
   programs.gpg.enable = true;
 
