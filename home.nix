@@ -69,6 +69,7 @@ in {
     grim
     slurp
     gimp
+    freeplane
   ];
   
   home.sessionVariables = let
@@ -77,6 +78,7 @@ in {
   in {
     NIXOS_OZONE_WL = "1";
     XDG_DATA_DIRS = schemadir + '':$XDG_DATA_DIRS'';
+    _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
   home.shellAliases = {
