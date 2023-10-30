@@ -491,5 +491,8 @@ exit $?
       dracula-theme.theme-dracula
       vscodevim.vim
     ];
+    userSettings = {
+      "window.titleBarStyle" = "custom";
+    };
   };
 }
