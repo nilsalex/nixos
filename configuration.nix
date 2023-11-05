@@ -2,13 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
+{ hostname, hardwareConfig }:
+
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ hardwareConfig ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -23,7 +22,7 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-  networking.hostName = "alexntng";
+  networking.hostName = hostname;
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
 
