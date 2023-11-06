@@ -95,6 +95,7 @@
       "wheel"
       "video"
       "networkmanager"
+      "vboxusers"
     ];
   };
 
@@ -158,6 +159,11 @@
   };
 
   services.pcscd.enable = true;
+
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
