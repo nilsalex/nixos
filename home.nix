@@ -107,8 +107,6 @@ in {
 
   programs.git = {
     enable = true;
-    userEmail = "nils@famalex.de";
-    userName = "Nils Alex";
     extraConfig = {
       init = {
         defaultBranch = "main";
