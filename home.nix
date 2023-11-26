@@ -76,7 +76,6 @@ in {
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
     pkgs.dotnet-sdk_6
-    pkgs.dotnet-runtime_6
     pkgs.jetbrains.rider
   ];
   
