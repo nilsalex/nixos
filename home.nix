@@ -70,6 +70,14 @@ in {
     slurp
     gimp
     freeplane
+    feh
+    nodejs_21
+    nodePackages."@tailwindcss/language-server"
+    nodePackages.typescript-language-server
+    nodePackages.dockerfile-language-server-nodejs
+    pkgs.dotnet-sdk_6
+    pkgs.dotnet-runtime_6
+    pkgs.jetbrains.rider
   ];
   
   home.sessionVariables = let
