@@ -129,8 +129,8 @@ in {
 
   xdg.configFile.nvim = {
     source = builtins.fetchTarball {
-      url = "https://github.com/nilsalex/kickstart.nvim/archive/17b0efb53fd0df9a2f0e6333160b514663d00f89.tar.gz";
-      sha256 = "0dwpazmk7li7c6n8hwdg8wgnjaqs5abd1apac4x73l96ish2h4iz";
+      url = "https://github.com/nilsalex/kickstart.nvim/archive/02d669abf6cad8093a8ffe91440172d68b80921.tar.gz";
+      sha256 = "1hqn0z2i1w3znvsw3i0xv1cgq9k5rdfff2vlkbyr3n8hbzkb205a";
     };
     recursive = true;
   };
