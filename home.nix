@@ -129,8 +129,8 @@ in {
 
   xdg.configFile.nvim = {
     source = builtins.fetchTarball {
-      url = "https://github.com/nilsalex/kickstart.nvim/archive/02d669abf6cad8093a8ffe91440172d68b80921.tar.gz";
-      sha256 = "1hqn0z2i1w3znvsw3i0xv1cgq9k5rdfff2vlkbyr3n8hbzkb205a";
+      url = "https://github.com/nilsalex/kickstart.nvim/archive/8203c31261de0d76908255d0cbdfb459c1ce305d.tar.gz";
+      sha256 = "0yd6vhlax0cxbgbyshjr0f67ssij2a8q7fmwlvrl7vy16yipafl6";
     };
     recursive = true;
   };
@@ -508,4 +508,6 @@ exit $?
       "window.titleBarStyle" = "custom";
     };
   };
+
+  programs.direnv.enable = true;
 }
