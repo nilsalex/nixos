@@ -124,6 +124,8 @@
   security.rtkit.enable = true;
   security.pam.services.swaylock.text = "auth include login";
 
+  security.pki.certificateFiles = map (file: ./. + "/cacerts/${file}") (builtins.attrNames (builtins.readDir ./cacerts));
+
   programs.light.enable = true;
   programs.dconf.enable = true;
 
