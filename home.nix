@@ -75,8 +75,10 @@ in {
     nodePackages."@tailwindcss/language-server"
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
-    pkgs.dotnet-sdk_6
-    pkgs.jetbrains.rider
+    dotnet-sdk_6
+    jetbrains.rider
+    tree
+    wtype
   ];
   
   home.sessionVariables = let
@@ -129,8 +131,8 @@ in {
 
   xdg.configFile.nvim = {
     source = builtins.fetchTarball {
-      url = "https://github.com/nilsalex/kickstart.nvim/archive/8203c31261de0d76908255d0cbdfb459c1ce305d.tar.gz";
-      sha256 = "0yd6vhlax0cxbgbyshjr0f67ssij2a8q7fmwlvrl7vy16yipafl6";
+      url = "https://github.com/nilsalex/kickstart.nvim/archive/0f01fd0a631471e579246122c17726b481891f0f.tar.gz";
+      sha256 = "0nf9a22hs3vdp7ls4jfbs1h3ha03g27381jp7jsgn0clzrck6vri";
     };
     recursive = true;
   };
@@ -139,6 +141,7 @@ in {
     enable = true;
     defaultCacheTtl = 86400;
     maxCacheTtl = 86400;
+    pinentryFlavor = "gnome3";
   };
 
   programs.gpg.enable = true;
