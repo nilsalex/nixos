@@ -170,10 +170,10 @@
 
   services.pcscd.enable = true;
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableExtensionPack = true;
-  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  # };
 
   virtualisation.docker.enable = true;
 
