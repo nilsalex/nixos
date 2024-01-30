@@ -126,7 +126,7 @@
   security.rtkit.enable = true;
   security.pam.services.swaylock.text = "auth include login";
 
-  security.pki.certificateFiles = map (file: ./. + "/cacerts/${file}") (builtins.attrNames (builtins.readDir ./cacerts));
+  security.pki.certificateFiles = if builtins.pathExists ./cacerts then map (file: ./. + "/cacerts/${file}") (builtins.attrNames (builtins.readDir ./cacerts)) else [];
 
   programs.light.enable = true;
   programs.dconf.enable = true;
@@ -154,9 +154,13 @@
 
   services.printing.enable = true;
   services.avahi.enable = true;
-  services.avahi.nssmdns = true;
+  services.avahi.nssmdns4 = true;
 
-  services.dbus.enable = true;
+  services.dbus = {
+    enable = true;
+    packages = [ pkgs.gcr ];
+  };
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;

@@ -28,6 +28,12 @@ in {
     pulseaudio
     pavucontrol
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    noto-fonts
+    noto-fonts-emoji
+    noto-fonts-cjk
+    noto-fonts-extra
+    dejavu_fonts
+    liberation_ttf
     bemenu
     blender
     magic-wormhole
@@ -75,6 +81,7 @@ in {
     nodePackages."@tailwindcss/language-server"
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
+    playwright-driver.browsers
     dotnet-sdk_6
     jetbrains.rider
     tree
@@ -88,6 +95,8 @@ in {
     NIXOS_OZONE_WL = "1";
     XDG_DATA_DIRS = schemadir + '':$XDG_DATA_DIRS'';
     _JAVA_AWT_WM_NONREPARENTING = "1";
+    PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
+    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
   };
 
   home.shellAliases = {
@@ -116,6 +125,7 @@ in {
 
   programs.git = {
     enable = true;
+    lfs.enable = true;
     extraConfig = {
       init = {
         defaultBranch = "main";
@@ -131,8 +141,8 @@ in {
 
   xdg.configFile.nvim = {
     source = builtins.fetchTarball {
-      url = "https://github.com/nilsalex/kickstart.nvim/archive/0f01fd0a631471e579246122c17726b481891f0f.tar.gz";
-      sha256 = "0nf9a22hs3vdp7ls4jfbs1h3ha03g27381jp7jsgn0clzrck6vri";
+      url = "https://github.com/nilsalex/kickstart.nvim/archive/00de36a0f74a4521292082efa76460ca46a24443.tar.gz";
+      sha256 = "0cfzkjm5w0z1mcgik0v15alj731lp4qmcq2bmiksp3pq3l76is0k";
     };
     recursive = true;
   };
@@ -513,4 +523,12 @@ exit $?
   };
 
   programs.direnv.enable = true;
+
+  programs.readline = {
+    enable = true;
+    bindings = {
+      "\\e[A" = "history-search-backward";
+      "\\e[B" = "history-search-forward";
+    };
+  };
 }
