@@ -139,14 +139,6 @@ in {
     vimAlias = true;
   };
 
-  xdg.configFile.nvim = {
-    source = builtins.fetchTarball {
-      url = "https://github.com/nilsalex/kickstart.nvim/archive/00de36a0f74a4521292082efa76460ca46a24443.tar.gz";
-      sha256 = "0cfzkjm5w0z1mcgik0v15alj731lp4qmcq2bmiksp3pq3l76is0k";
-    };
-    recursive = true;
-  };
-
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 86400;
