@@ -161,6 +161,12 @@
     packages = [ pkgs.gcr ];
   };
 
+  services.clamav = {
+    scanner.enable = true;
+    updater.enable = true;
+    fangfrisch.enable = true;
+  };
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;
