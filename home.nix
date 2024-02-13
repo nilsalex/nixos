@@ -407,10 +407,6 @@ in {
       window.titlebar = false;
     };
     extraConfig = ''
-      # Extra workspace "10"
-      bindsym Mod4+0 workspace number 10
-      bindsym Mod4+Shift+0 move container to workspace number 10
-
       # Move workspaces
       bindsym Mod4+Control+Shift+l move workspace to output right
       bindsym Mod4+Control+Shift+h move workspace to output left
