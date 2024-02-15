@@ -97,7 +97,7 @@
       "wheel"
       "video"
       "networkmanager"
-      "vboxusers"
+      "libvirtd"
       "docker"
     ];
   };
@@ -181,6 +181,8 @@
   #   enable = true;
   #   enableExtensionPack = true;
   # };
+
+  virtualisation.libvirtd.enable = true;
 
   virtualisation.docker.enable = true;
 

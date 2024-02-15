@@ -86,6 +86,7 @@ in {
     jetbrains.rider
     tree
     wtype
+    virt-manager
   ];
   
   home.sessionVariables = let
