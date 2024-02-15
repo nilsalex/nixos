@@ -131,6 +131,8 @@
   programs.light.enable = true;
   programs.dconf.enable = true;
 
+  programs.virt-manager.enable = true;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;

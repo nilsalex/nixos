@@ -86,7 +86,6 @@ in {
     jetbrains.rider
     tree
     wtype
-    virt-manager
   ];
   
   home.sessionVariables = let
@@ -446,6 +445,10 @@ in {
     settings = {
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
+      };
+      "org/virt-manager/virt-manager/connections" = {
+        autoconnect = ["qemu:///system"];
+        uris = ["qemu:///system"];
       };
     };
   };
