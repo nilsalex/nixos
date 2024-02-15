@@ -98,6 +98,8 @@
       "video"
       "networkmanager"
       "libvirtd"
+      "kvm"
+      "qemu-libvirtd"
       "docker"
     ];
   };
@@ -119,6 +121,7 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    win-virtio
   ];
 
 
@@ -184,7 +187,18 @@
   #   enableExtensionPack = true;
   # };
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+
+    qemu = {
+      ovmf = {
+        enable = true;
+      };
+      swtpm = {
+        enable = true;
+      };
+    };
+  };
 
   virtualisation.docker.enable = true;
 
