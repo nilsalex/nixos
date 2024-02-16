@@ -86,6 +86,7 @@ in {
     jetbrains.rider
     tree
     wtype
+    llm-ls
   ];
   
   home.sessionVariables = let
