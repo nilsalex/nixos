@@ -86,6 +86,8 @@ in {
     jetbrains.rider
     tree
     wtype
+    jq
+    libreoffice
   ];
   
   home.sessionVariables = let
