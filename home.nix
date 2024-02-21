@@ -88,6 +88,9 @@ in {
     wtype
     jq
     libreoffice
+    terraform
+    terraform-ls
+    tflint
   ];
   
   home.sessionVariables = let
