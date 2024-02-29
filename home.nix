@@ -81,7 +81,6 @@ in {
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
     playwright-driver.browsers
-    dotnet-sdk_6
     dotnet-sdk_8
     jetbrains.rider
     tree
