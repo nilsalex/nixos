@@ -51,7 +51,6 @@ in {
     lua-language-server
     texlive.combined.scheme-medium
     mupdf
-    nodePackages.typescript-language-server
     zoom-us
     xdg_utils
     slack
@@ -80,6 +79,7 @@ in {
     nodePackages."@tailwindcss/language-server"
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
+    nodePackages.pnpm
     playwright-driver.browsers
     dotnet-sdk_8
     jetbrains.rider
