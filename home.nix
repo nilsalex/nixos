@@ -54,7 +54,6 @@ in {
     zoom-us
     xdg_utils
     slack
-    rnix-lsp
     xdg-desktop-portal
     xdg-desktop-portal-wlr
     xdg-desktop-portal-gtk
