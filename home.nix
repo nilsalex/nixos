@@ -147,7 +147,7 @@ in {
     enable = true;
     defaultCacheTtl = 86400;
     maxCacheTtl = 86400;
-    pinentryFlavor = "gnome3";
+    pinentryPackage = pkgs.pinentry-gnome3;
   };
 
   programs.gpg.enable = true;
