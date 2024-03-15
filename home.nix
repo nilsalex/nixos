@@ -90,6 +90,7 @@ in {
     terraform
     terraform-ls
     tflint
+    restic
   ];
   
   home.sessionVariables = let
