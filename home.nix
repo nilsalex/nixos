@@ -92,6 +92,8 @@ in {
     terraform-ls
     tflint
     restic
+    zig
+    zls
   ];
   
   home.sessionVariables = let
