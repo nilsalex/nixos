@@ -25,6 +25,7 @@ in {
 
   home.packages = with pkgs; [
     google-chrome
+    firefox
     pulseaudio
     pavucontrol
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
