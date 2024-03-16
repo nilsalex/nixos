@@ -22,11 +22,11 @@
     },
     "neovim-config": {
       "locked": {
-        "lastModified": 1710257155,
-        "narHash": "sha256-FTiK0oJmyrwuPAkYFPpbdtpCSkmzgniDVV9lMjSEm3g=",
+        "lastModified": 1710608175,
+        "narHash": "sha256-G1BRAzv71VxjL9Cuy/LbbqjiS5MnV428sa78pxZTpJ4=",
         "ref": "fork",
-        "rev": "45dbe9c57ca4a85671aa772cef5e2e02fa7642e3",
-        "revCount": 245,
+        "rev": "7cff97fe48b298f78295a0be7fb1d0148ebff626",
+        "revCount": 246,
         "type": "git",
         "url": "ssh://git@github.com/nilsalex/kickstart.nvim"
       },
