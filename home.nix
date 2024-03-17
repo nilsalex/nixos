@@ -109,7 +109,7 @@ in {
 
   home.shellAliases = {
     sway = "sway > ~/.local/var/log/sway.log 2>&1";
-    groot = "git root";
+    groot = "cd \"$(git root)\"";
   };
 
   fonts.fontconfig.enable = true;
