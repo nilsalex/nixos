@@ -2,10 +2,10 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "git+ssh://git@github.com/NixOs/nixpkgs?ref=nixos-unstable";
-    home-manager.url = "git+ssh://git@github.com/nix-community/home-manager";
+    nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    neovim-config.url = "git+ssh://git@github.com/nilsalex/kickstart.nvim?ref=fork";
+    neovim-config.url = "github:nilsalex/kickstart.nvim/fork";
   };
 
   outputs = { self, nixpkgs, home-manager, neovim-config, ... }@attrs:
