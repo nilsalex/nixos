@@ -109,6 +109,7 @@ in {
 
   home.shellAliases = {
     sway = "sway > ~/.local/var/log/sway.log 2>&1";
+    groot = "git root";
   };
 
   fonts.fontconfig.enable = true;
@@ -134,6 +135,9 @@ in {
   programs.git = {
     enable = true;
     lfs.enable = true;
+    aliases = {
+      root = "rev-parse --show-toplevel";
+    };
     extraConfig = {
       init = {
         defaultBranch = "main";
