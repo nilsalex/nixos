@@ -514,6 +514,18 @@ exit $?
 }
   '';
 
+  home.file.".config/google-chrome/NativeMessagingHosts/de.nilsalex.yktotp".text = ''
+{
+  "name": "de.nilsalex.yktotp",
+  "description": "Retrieve a TOTP form a YubiKey",
+  "path": "/home/nils/code/nilsalex/yktotp-jsonapi/target/release/yktotp-jsonapi",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://ihbedomjncdjfolkgkckgfdkbjbemmjl/"
+  ]
+}
+  '';
+
   programs.firefox = {
     enable = true;
   };
@@ -523,6 +535,17 @@ exit $?
   "name": "com.justwatch.gopass",
   "description": "Gopass wrapper to search and return passwords",
   "path": "/home/nils/.config/gopass/gopass_wrapper.sh",
+  "type": "stdio",
+  "allowed_extensions": [
+  ]
+}
+  '';
+
+  home.file.".mozilla/native-messaging-hosts/de.nilsalex.yktotp".text = ''
+{
+  "name": "de.nilsalex.yktotp",
+  "description": "Retrieve a TOTP form a YubiKey",
+  "path": "/home/nils/code/nilsalex/yktotp-jsonapi/target/release/yktotp-jsonapi",
   "type": "stdio",
   "allowed_extensions": [
     "{eec37db0-22ad-4bf1-9068-5ae08df8c7e9}"
