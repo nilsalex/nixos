@@ -25,7 +25,6 @@ in {
 
   home.packages = with pkgs; [
     google-chrome
-    firefox
     pulseaudio
     pavucontrol
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -514,6 +513,11 @@ exit $?
   ]
 }
   '';
+
+  programs.firefox = {
+    enable = true;
+    nativeMessagingHosts = [ pkgs.gopass-jsonapi ];
+  };
 
   programs.vscode = {
     enable = true;
