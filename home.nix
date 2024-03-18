@@ -514,7 +514,7 @@ exit $?
 }
   '';
 
-  home.file.".config/google-chrome/NativeMessagingHosts/de.nilsalex.yktotp".text = ''
+  home.file.".config/google-chrome/NativeMessagingHosts/de.nilsalex.yktotp.json".text = ''
 {
   "name": "de.nilsalex.yktotp",
   "description": "Retrieve a TOTP form a YubiKey",
@@ -541,7 +541,7 @@ exit $?
 }
   '';
 
-  home.file.".mozilla/native-messaging-hosts/de.nilsalex.yktotp".text = ''
+  home.file.".mozilla/native-messaging-hosts/de.nilsalex.yktotp.json".text = ''
 {
   "name": "de.nilsalex.yktotp",
   "description": "Retrieve a TOTP form a YubiKey",
