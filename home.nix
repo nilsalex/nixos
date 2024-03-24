@@ -550,7 +550,7 @@ exit $?
   "path": "/home/nils/code/nilsalex/yktotp-jsonapi/target/release/yktotp-jsonapi",
   "type": "stdio",
   "allowed_extensions": [
-    "{eec37db0-22ad-4bf1-9068-5ae08df8c7e9}"
+    "7e0690d8bb477006c43674c770588d31151bdc16@temporary-addon"
   ]
 }
   '';
