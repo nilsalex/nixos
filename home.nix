@@ -82,6 +82,7 @@ in {
     nodePackages.pnpm
     playwright-driver.browsers
     dotnet-sdk_8
+    omnisharp-roslyn
     jetbrains.rider
     tree
     wtype
