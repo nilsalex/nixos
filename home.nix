@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   configure-gtk = pkgs.writeTextFile {
@@ -16,6 +16,8 @@ let
       gsettings set $gnome_schema color-scheme 'prefer-dark'
     '';
   };
+
+  inkscape-silhouette = pkgs.callPackage ./inkscape-silhouette.nix { };
 
 in {
   home.username = "nils";
@@ -94,6 +96,9 @@ in {
     restic
     zig
     zls
+    (inkscape-with-extensions.override {
+      inkscapeExtensions = [ inkscape-silhouette ];
+    })
   ];
   
   home.sessionVariables = let
