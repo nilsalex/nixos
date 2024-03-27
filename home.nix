@@ -575,4 +575,8 @@ exit $?
       "\\e[B" = "history-search-forward";
     };
   };
+
+  programs.awscli = {
+    enable = true;
+  };
 }
