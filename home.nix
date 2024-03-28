@@ -17,7 +17,9 @@ let
     '';
   };
 
-  inkscape-silhouette = pkgs.callPackage ./inkscape-silhouette.nix { };
+  inkscape-silhouette = pkgs.callPackage ./inkscape/inkscape-silhouette.nix { pkgs = pkgs; };
+
+  yktotp-jsonapi = pkgs.callPackage ./yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
 
 in {
   home.username = "nils";
@@ -524,7 +526,7 @@ exit $?
 {
   "name": "de.nilsalex.yktotp",
   "description": "Retrieve a TOTP form a YubiKey",
-  "path": "/home/nils/code/nilsalex/yktotp-jsonapi/target/release/yktotp-jsonapi",
+  "path": "${yktotp-jsonapi}/bin/yktotp-jsonapi",
   "type": "stdio",
   "allowed_origins": [
     "chrome-extension://ihbedomjncdjfolkgkckgfdkbjbemmjl/"
@@ -552,7 +554,7 @@ exit $?
 {
   "name": "de.nilsalex.yktotp",
   "description": "Retrieve a TOTP form a YubiKey",
-  "path": "/home/nils/code/nilsalex/yktotp-jsonapi/target/release/yktotp-jsonapi",
+  "path": "${yktotp-jsonapi}/bin/yktotp-jsonapi",
   "type": "stdio",
   "allowed_extensions": [
     "7e0690d8bb477006c43674c770588d31151bdc16@temporary-addon"
