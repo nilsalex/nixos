@@ -55,7 +55,6 @@ in {
     lua-language-server
     texlive.combined.scheme-medium
     mupdf
-    zoom-us
     xdg_utils
     slack
     nil
