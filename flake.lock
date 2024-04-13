@@ -22,11 +22,11 @@
     },
     "neovim-config": {
       "locked": {
-        "lastModified": 1711281501,
-        "narHash": "sha256-aDG73GW8IQXAB8bil2/IBLblEMKLzVl2BNOUkhnxjno=",
+        "lastModified": 1713021321,
+        "narHash": "sha256-ZbUaEmE402EEQDYMl+a5NgSX87MpVrxmIUcYATqxgIY=",
         "owner": "nilsalex",
         "repo": "kickstart.nvim",
-        "rev": "6f5e46e20a8653f99a735da0da8418a625957b30",
+        "rev": "f7e99aa75161d4e537f0ee136a74672322612034",
         "type": "github"
       },
       "original": {
