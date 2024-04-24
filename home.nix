@@ -126,7 +126,8 @@ in {
     enable = true;
     enableVteIntegration = true;
     initExtra = ''
-      export PS1='[\u@\h \W]\n\$ '
+      export shell_stack="B''${shell_stack}"
+      export PS1="[\u@\h \W] ''${shell_stack}\n\$ "
     '';
   };
 
