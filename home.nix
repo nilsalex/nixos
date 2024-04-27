@@ -93,6 +93,7 @@ in {
     omnisharp-roslyn
     jetbrains.rider
     tree
+    ncdu
     wtype
     jq
     libreoffice
