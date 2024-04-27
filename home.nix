@@ -83,7 +83,7 @@ in {
     gimp
     freeplane
     feh
-    nodejs_21
+    nodejs_22
     nodePackages."@tailwindcss/language-server"
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
