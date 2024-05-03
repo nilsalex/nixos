@@ -556,7 +556,7 @@ exit $?
 }
   '';
 
-  home.file.".mozilla/native-messaging-hosts/de.nilsalex.yktotp.json".text = ''
+  home.file.".mozilla/native-messaging-hosts/de.nilsalex.yktotp.json.template".text = ''
 {
   "name": "de.nilsalex.yktotp",
   "description": "Retrieve a TOTP form a YubiKey",
