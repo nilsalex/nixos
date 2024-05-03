@@ -535,7 +535,7 @@ exit $?
   "path": "${yktotp-jsonapi}/bin/yktotp-jsonapi",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://ihbedomjncdjfolkgkckgfdkbjbemmjl/"
+    "chrome-extension://onhoikdmimbconmfoflbcdababjkpcim/"
   ]
 }
   '';
