@@ -28,12 +28,7 @@ in {
   home.stateVersion = "23.05";
 
   home.packages = with pkgs; [
-    (google-chrome.override {
-      commandLineArgs = [
-        "--enable-features=UseOzonePlatform"
-        "--ozone-platform=wayland"
-      ];
-    })
+    google-chrome
     pulseaudio
     pavucontrol
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
