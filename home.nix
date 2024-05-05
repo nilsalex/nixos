@@ -39,7 +39,6 @@ in {
     dejavu_fonts
     liberation_ttf
     bemenu
-    magic-wormhole
     prusa-slicer
     gcc
     dejavu_fonts
