@@ -100,6 +100,7 @@ in {
     (inkscape-with-extensions.override {
       inkscapeExtensions = [ inkscape-silhouette ];
     })
+    glow
   ];
   
   home.sessionVariables = let
