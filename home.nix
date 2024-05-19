@@ -101,6 +101,8 @@ in {
       inkscapeExtensions = [ inkscape-silhouette ];
     })
     glow
+    python3
+    pyright
   ];
   
   home.sessionVariables = let
