@@ -20,7 +20,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.nils = { pkgs, ... }: {
               imports = [
-	        neovim-config.homeManagerModules.neovim
+                neovim-config.homeManagerModules.neovim
                 ./home.nix
               ];
             };

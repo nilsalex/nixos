@@ -91,7 +91,7 @@ in {
     wtype
     jq
     libreoffice
-    terraform
+    tenv
     terraform-ls
     tflint
     restic
