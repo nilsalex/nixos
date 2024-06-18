@@ -103,6 +103,7 @@ in {
     glow
     python3
     pyright
+    mpv
   ];
   
   home.sessionVariables = let
