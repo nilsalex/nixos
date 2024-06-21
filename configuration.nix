@@ -30,9 +30,8 @@
   services.thermald.enable = true;
   services.tlp.enable = true;
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
   };
 
   hardware.bluetooth.enable = true;
