@@ -24,10 +24,7 @@
 
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
-  networking.firewall = {
-    enable = true;
-    interfaces.docker0.allowedTCPPorts = [ 5173 ];
-  };
+  networking.firewall.enable = false;
 
   powerManagement.enable = true;
   services.thermald.enable = true;
