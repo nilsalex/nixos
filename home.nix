@@ -132,6 +132,7 @@ in {
     initExtra = ''
       export shell_stack="B''${shell_stack}"
       export PS1="[\u@\h \W] ''${shell_stack}\n\$ "
+      [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
     '';
   };
 
