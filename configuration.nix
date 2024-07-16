@@ -177,12 +177,12 @@
     packages = [ pkgs.gcr ];
   };
 
-  services.clamav = {
-    daemon.enable = true;
-    # scanner.enable = true;
-    updater.enable = true;
-    fangfrisch.enable = true;
-  };
+  # services.clamav = {
+  #   daemon.enable = true;
+  #   scanner.enable = true;
+  #   updater.enable = true;
+  #   fangfrisch.enable = true;
+  # };
 
   xdg.portal = {
     enable = true;
