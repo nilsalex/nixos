@@ -39,6 +39,25 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  services.throttled.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
 
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open = false;
+    nvidiaSettings = true;
+
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:45:0:0";
+    };
+  };
+
+  services.throttled.enable = true;
 }

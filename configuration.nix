@@ -3,9 +3,9 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ hardwareConfig ];
-
   nixpkgs.config.allowUnfree = true;
+
+  imports = [ hardwareConfig ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -20,9 +20,7 @@
   services.thermald.enable = true;
   services.tlp.enable = true;
 
-  hardware.graphics = {
-    enable = true;
-  };
+  hardware.graphics.enable = true;
 
   hardware.bluetooth.enable = true;
 
