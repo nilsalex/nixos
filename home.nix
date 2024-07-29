@@ -104,6 +104,11 @@ in {
     python3
     pyright
     mpv
+    kubectl
+    k9s
+    kubectx
+    helm
+    stern
   ];
   
   home.sessionVariables = let
