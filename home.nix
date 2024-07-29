@@ -52,6 +52,7 @@ in {
     tree-sitter
     wl-clipboard
     lua-language-server
+    stylua
     texlive.combined.scheme-medium
     mupdf
     xdg_utils
