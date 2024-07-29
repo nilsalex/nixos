@@ -108,7 +108,7 @@ in {
     kubectl
     k9s
     kubectx
-    helm
+    kubernetes-helm
     stern
   ];
   
