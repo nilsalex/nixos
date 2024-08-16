@@ -19,6 +19,8 @@ let
       '';
   };
 
+  npm-groovy-lint = pkgs.callPackage ./npm-groovy-lint/default.nix { pkgs = pkgs; };
+
   inkscape-silhouette = pkgs.callPackage ./inkscape/inkscape-silhouette.nix { pkgs = pkgs; };
 
   yktotp-jsonapi = pkgs.callPackage ./yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
@@ -112,6 +114,7 @@ in
     kubernetes-helm
     stern
     nixfmt-rfc-style
+    npm-groovy-lint
   ];
 
   home.sessionVariables =
@@ -595,6 +598,10 @@ in
   };
 
   programs.awscli = {
+    enable = true;
+  };
+
+  programs.java = {
     enable = true;
   };
 }
