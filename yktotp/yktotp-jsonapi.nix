@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 
 pkgs.rustPlatform.buildRustPackage rec {
   pname = "yktotp-jsonapi";
@@ -17,5 +17,5 @@ pkgs.rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = [ pkgs.pkg-config ];
 
-  meta = {};
+  meta = { };
 }

@@ -54,20 +54,19 @@
     '';
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    win-virtio
-  ];
+  environment.systemPackages = with pkgs; [ vim win-virtio ];
 
   environment.etc = {
     "ovmf/edk2-x86_64-secure-code.fd" = {
-      source = config.virtualisation.libvirtd.qemu.package + "/share/qemu/edk2-x86_64-secure-code.fd";
+      source = config.virtualisation.libvirtd.qemu.package
+        + "/share/qemu/edk2-x86_64-secure-code.fd";
     };
   };
 
   environment.etc = {
     "ovmf/edk2-i386-vars.fd" = {
-      source = config.virtualisation.libvirtd.qemu.package + "/share/qemu/edk2-i386-vars.fd";
+      source = config.virtualisation.libvirtd.qemu.package
+        + "/share/qemu/edk2-i386-vars.fd";
     };
   };
 
@@ -75,7 +74,11 @@
   security.rtkit.enable = true;
   security.pam.services.swaylock.text = "auth include login";
 
-  security.pki.certificateFiles = if builtins.pathExists ./cacerts then map (file: ./. + "/cacerts/${file}") (builtins.attrNames (builtins.readDir ./cacerts)) else [];
+  security.pki.certificateFiles = if builtins.pathExists ./cacerts then
+    map (file: ./. + "/cacerts/${file}")
+    (builtins.attrNames (builtins.readDir ./cacerts))
+  else
+    [ ];
 
   programs.light.enable = true;
   programs.dconf.enable = true;
@@ -136,9 +139,7 @@
         enable = true;
         packages = [ pkgs.OVMFFull.fd ];
       };
-      swtpm = {
-        enable = true;
-      };
+      swtpm = { enable = true; };
     };
   };
 

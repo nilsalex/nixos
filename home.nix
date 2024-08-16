@@ -17,9 +17,11 @@ let
     '';
   };
 
-  inkscape-silhouette = pkgs.callPackage ./inkscape/inkscape-silhouette.nix { pkgs = pkgs; };
+  inkscape-silhouette =
+    pkgs.callPackage ./inkscape/inkscape-silhouette.nix { pkgs = pkgs; };
 
-  yktotp-jsonapi = pkgs.callPackage ./yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
+  yktotp-jsonapi =
+    pkgs.callPackage ./yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
 
 in {
   home.username = "nils";
@@ -110,14 +112,15 @@ in {
     kubectx
     kubernetes-helm
     stern
+    nixfmt-rfc-style
   ];
-  
+
   home.sessionVariables = let
     schema = pkgs.gsettings-desktop-schemas;
     schemadir = "${schema}/share/gsettings-schemas/${schema.name}";
   in {
     NIXOS_OZONE_WL = "1";
-    XDG_DATA_DIRS = schemadir + '':$XDG_DATA_DIRS'';
+    XDG_DATA_DIRS = schemadir + ":$XDG_DATA_DIRS";
     _JAVA_AWT_WM_NONREPARENTING = "1";
     PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
     PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
@@ -125,7 +128,7 @@ in {
 
   home.shellAliases = {
     sway = "sway > ~/.local/var/log/sway.log 2>&1";
-    groot = "cd \"$(git root)\"";
+    groot = ''cd "$(git root)"'';
   };
 
   fonts.fontconfig.enable = true;
@@ -144,23 +147,15 @@ in {
 
   programs.kitty = {
     enable = true;
-    font = {
-      name = "FiraCode Nerd Font";
-    };
+    font = { name = "FiraCode Nerd Font"; };
     theme = "One Dark";
   };
 
   programs.git = {
     enable = true;
     lfs.enable = true;
-    aliases = {
-      root = "rev-parse --show-toplevel";
-    };
-    extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
-    };
+    aliases = { root = "rev-parse --show-toplevel"; };
+    extraConfig = { init = { defaultBranch = "main"; }; };
   };
 
   programs.neovim = {
@@ -180,183 +175,148 @@ in {
 
   programs.swaylock = {
     enable = true;
-    settings = {
-      color = "000000";
-    };
+    settings = { color = "000000"; };
   };
 
   programs.waybar = {
     enable = true;
-    settings = [
-{
-  position = "bottom";
-  height = 16;
-  spacing = 4;
-  modules-left = [
-    "sway/workspaces"
-    "sway/mode"
-    "sway/scratchpad"
-    "custom/media"
-  ];
-  modules-center = [
-    "sway/window"
-  ];
-  modules-right = [
-    "mpd"
-    "idle_inhibitor"
-    "pulseaudio"
-    "network"
-    "cpu"
-    "memory"
-    "keyboard-state"
-    "sway/language"
-    "battery"
-    "battery#bat2"
-    "clock"
-    "tray"
-  ];
-  keyboard-state = {
-    numlock = true;
-    capslock = true;
-    format = "{name} {icon}";
-    format-icons = {
-      locked = "";
-      unlocked = "";
-    };
-  };
-  "sway/mode" = {
-    format = "<span style=\"italic\">{}</span>";
-  };
-  "sway/scratchpad" = {
-    format = "{icon} {count}";
-    show-empty = false;
-    format-icons = [
-      ""
-      ""
-    ];
-    tooltip = true;
-    tooltip-format = "{app}: {title}";
-  };
-  mpd = {
-    format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
-    format-disconnected = "Disconnected ";
-    format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
-    unknown-tag = "N/A";
-    interval = 2;
-    consume-icons = {
-      on = " ";
-    };
-    random-icons = {
-      off = "<span color=\"#f53c3c\"></span> ";
-      on = " ";
-    };
-    repeat-icons = {
-      on = " ";
-    };
-    single-icons = {
-      on = "1 ";
-    };
-    state-icons = {
-      paused = "";
-      playing = "";
-    };
-    tooltip-format = "MPD (connected)";
-    tooltip-format-disconnected = "MPD (disconnected)";
-  };
-  idle_inhibitor = {
-    format = "{icon}";
-    format-icons = {
-      activated = "";
-      deactivated = "";
-    };
-  };
-  tray = {
-    spacing = 10;
-  };
-  clock = {
-    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-    format-alt = "{:%Y-%m-%d}";
-  };
-  cpu = {
-    format = "{usage}% ";
-    tooltip = false;
-  };
-  memory = {
-    format = "{}% ";
-  };
-  battery = {
-    states = {
-      warning = 30;
-      critical = 15;
-    };
-    format = "{capacity}% {icon}";
-    format-charging = "{capacity}% ";
-    format-plugged = "{capacity}% ";
-    format-alt = "{time} {icon}";
-    format-icons = [
-      ""
-      ""
-      ""
-      ""
-      ""
-    ];
-  };
-  "battery#bat2" = {
-    bat = "BAT2";
-  };
-  network = {
-    format-wifi = "{essid} ({signalStrength}%) ";
-    format-ethernet = "{ipaddr}/{cidr} ";
-    tooltip-format = "{ifname} via {gwaddr} ";
-    format-linked = "{ifname} (No IP) ";
-    format-disconnected = "Disconnected ⚠";
-    format-alt = "{ifname}: {ipaddr}/{cidr}";
-  };
-  pulseaudio = {
-    format = "{volume}% {icon} {format_source}";
-    format-bluetooth = "{volume}% {icon} {format_source}";
-    format-bluetooth-muted = " {icon} {format_source}";
-    format-muted = " {format_source}";
-    format-source = "{volume}% ";
-    format-source-muted = "";
-    format-icons = {
-      headphone = "";
-      hands-free = "";
-      headset = "";
-      phone = "";
-      portable = "";
-      car = "";
-      default = [
-        ""
-        ""
-        ""
+    settings = [{
+      position = "bottom";
+      height = 16;
+      spacing = 4;
+      modules-left =
+        [ "sway/workspaces" "sway/mode" "sway/scratchpad" "custom/media" ];
+      modules-center = [ "sway/window" ];
+      modules-right = [
+        "mpd"
+        "idle_inhibitor"
+        "pulseaudio"
+        "network"
+        "cpu"
+        "memory"
+        "keyboard-state"
+        "sway/language"
+        "battery"
+        "battery#bat2"
+        "clock"
+        "tray"
       ];
-    };
-    on-click = "pavucontrol";
-  };
-  "custom/media" = {
-    format = "{icon} {}";
-    return-type = "json";
-    max-length = 40;
-    format-icons = {
-      spotify = "";
-      default = "🎜";
-    };
-    escape = true;
-    exec = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null";
-  };
-}
-    ];
+      keyboard-state = {
+        numlock = true;
+        capslock = true;
+        format = "{name} {icon}";
+        format-icons = {
+          locked = "";
+          unlocked = "";
+        };
+      };
+      "sway/mode" = { format = ''<span style="italic">{}</span>''; };
+      "sway/scratchpad" = {
+        format = "{icon} {count}";
+        show-empty = false;
+        format-icons = [ "" "" ];
+        tooltip = true;
+        tooltip-format = "{app}: {title}";
+      };
+      mpd = {
+        format =
+          "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
+        format-disconnected = "Disconnected ";
+        format-stopped =
+          "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
+        unknown-tag = "N/A";
+        interval = 2;
+        consume-icons = { on = " "; };
+        random-icons = {
+          off = ''<span color="#f53c3c"></span> '';
+          on = " ";
+        };
+        repeat-icons = { on = " "; };
+        single-icons = { on = "1 "; };
+        state-icons = {
+          paused = "";
+          playing = "";
+        };
+        tooltip-format = "MPD (connected)";
+        tooltip-format-disconnected = "MPD (disconnected)";
+      };
+      idle_inhibitor = {
+        format = "{icon}";
+        format-icons = {
+          activated = "";
+          deactivated = "";
+        };
+      };
+      tray = { spacing = 10; };
+      clock = {
+        tooltip-format = ''
+          <big>{:%Y %B}</big>
+          <tt><small>{calendar}</small></tt>'';
+        format-alt = "{:%Y-%m-%d}";
+      };
+      cpu = {
+        format = "{usage}% ";
+        tooltip = false;
+      };
+      memory = { format = "{}% "; };
+      battery = {
+        states = {
+          warning = 30;
+          critical = 15;
+        };
+        format = "{capacity}% {icon}";
+        format-charging = "{capacity}% ";
+        format-plugged = "{capacity}% ";
+        format-alt = "{time} {icon}";
+        format-icons = [ "" "" "" "" "" ];
+      };
+      "battery#bat2" = { bat = "BAT2"; };
+      network = {
+        format-wifi = "{essid} ({signalStrength}%) ";
+        format-ethernet = "{ipaddr}/{cidr} ";
+        tooltip-format = "{ifname} via {gwaddr} ";
+        format-linked = "{ifname} (No IP) ";
+        format-disconnected = "Disconnected ⚠";
+        format-alt = "{ifname}: {ipaddr}/{cidr}";
+      };
+      pulseaudio = {
+        format = "{volume}% {icon} {format_source}";
+        format-bluetooth = "{volume}% {icon} {format_source}";
+        format-bluetooth-muted = " {icon} {format_source}";
+        format-muted = " {format_source}";
+        format-source = "{volume}% ";
+        format-source-muted = "";
+        format-icons = {
+          headphone = "";
+          hands-free = "";
+          headset = "";
+          phone = "";
+          portable = "";
+          car = "";
+          default = [ "" "" "" ];
+        };
+        on-click = "pavucontrol";
+      };
+      "custom/media" = {
+        format = "{icon} {}";
+        return-type = "json";
+        max-length = 40;
+        format-icons = {
+          spotify = "";
+          default = "🎜";
+        };
+        escape = true;
+        exec = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null";
+      };
+    }];
   };
 
   services.swayidle = {
     enable = true;
-    events = [
-      {
-        event = "before-sleep";
-        command = "${pkgs.swaylock}/bin/swaylock -f";
-      }
-    ];
+    events = [{
+      event = "before-sleep";
+      command = "${pkgs.swaylock}/bin/swaylock -f";
+    }];
     timeouts = [
       {
         timeout = 120;
@@ -374,13 +334,11 @@ in {
     enable = false;
     profiles = {
       undocked = {
-        outputs = [
-          {
-            criteria = "eDP-1";
-            status = "enable";
-            position = "0,0";
-          }
-        ];
+        outputs = [{
+          criteria = "eDP-1";
+          status = "enable";
+          position = "0,0";
+        }];
       };
       docked = {
         outputs = [
@@ -419,20 +377,10 @@ in {
           xkb_options = "compose:ralt";
         };
       };
-      output = {
-        eDP-1 = {
-          scale = "1.3";
-        };
-      };
+      output = { eDP-1 = { scale = "1.3"; }; };
       menu = "bemenu-run";
-      fonts = {
-        names = [ "FiraCode Nerd Font" ];
-      };
-      bars = [
-        {
-          command = "${pkgs.waybar}/bin/waybar";
-        }
-      ];
+      fonts = { names = [ "FiraCode Nerd Font" ]; };
+      bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
       floating.titlebar = false;
       window.titlebar = false;
     };
@@ -473,21 +421,17 @@ in {
   dconf = {
     enable = true;
     settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-      };
+      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
       "org/virt-manager/virt-manager/connections" = {
-        autoconnect = ["qemu:///system"];
-        uris = ["qemu:///system"];
+        autoconnect = [ "qemu:///system" ];
+        uris = [ "qemu:///system" ];
       };
     };
   };
 
   gtk = {
     enable = true;
-    theme = {
-      name = "Adwaita-dark";
-    };
+    theme = { name = "Adwaita-dark"; };
     iconTheme = {
       name = "Adwaita";
       package = pkgs.adwaita-icon-theme;
@@ -503,74 +447,75 @@ in {
 
   home.file.".config/gopass/gopass_wrapper.sh" = {
     text = ''
-#!/bin/sh
+      #!/bin/sh
 
-export GPG_TTY="$(tty)"
+      export GPG_TTY="$(tty)"
 
-if [ -f ~/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
-	source ~/.gpg-agent-info
-	export GPG_AGENT_INFO
-else
-	eval $(gpg-agent --daemon)
-fi
+      if [ -f ~/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
+      	source ~/.gpg-agent-info
+      	export GPG_AGENT_INFO
+      else
+      	eval $(gpg-agent --daemon)
+      fi
 
-${pkgs.gopass-jsonapi}/bin/gopass-jsonapi listen
+      ${pkgs.gopass-jsonapi}/bin/gopass-jsonapi listen
 
-exit $?
-  '';
+      exit $?
+    '';
     executable = true;
   };
 
-  home.file.".config/google-chrome/NativeMessagingHosts/com.justwatch.gopass.json".text = ''
-{
-  "name": "com.justwatch.gopass",
-  "description": "Gopass wrapper to search and return passwords",
-  "path": "/home/nils/.config/gopass/gopass_wrapper.sh",
-  "type": "stdio",
-  "allowed_origins": [
-    "chrome-extension://kkhfnlkhiapbiehimabddjbimfaijdhk/"
-  ]
-}
-  '';
+  home.file.".config/google-chrome/NativeMessagingHosts/com.justwatch.gopass.json".text =
+    ''
+      {
+        "name": "com.justwatch.gopass",
+        "description": "Gopass wrapper to search and return passwords",
+        "path": "/home/nils/.config/gopass/gopass_wrapper.sh",
+        "type": "stdio",
+        "allowed_origins": [
+          "chrome-extension://kkhfnlkhiapbiehimabddjbimfaijdhk/"
+        ]
+      }
+    '';
 
-  home.file.".config/google-chrome/NativeMessagingHosts/de.nilsalex.yktotp.json".text = ''
-{
-  "name": "de.nilsalex.yktotp",
-  "description": "Retrieve a TOTP form a YubiKey",
-  "path": "${yktotp-jsonapi}/bin/yktotp-jsonapi",
-  "type": "stdio",
-  "allowed_origins": [
-    "chrome-extension://onhoikdmimbconmfoflbcdababjkpcim/"
-  ]
-}
-  '';
+  home.file.".config/google-chrome/NativeMessagingHosts/de.nilsalex.yktotp.json".text =
+    ''
+      {
+        "name": "de.nilsalex.yktotp",
+        "description": "Retrieve a TOTP form a YubiKey",
+        "path": "${yktotp-jsonapi}/bin/yktotp-jsonapi",
+        "type": "stdio",
+        "allowed_origins": [
+          "chrome-extension://onhoikdmimbconmfoflbcdababjkpcim/"
+        ]
+      }
+    '';
 
-  programs.firefox = {
-    enable = true;
-  };
+  programs.firefox = { enable = true; };
 
-  home.file.".mozilla/native-messaging-hosts/com.justwatch.gopass.json".text = ''
-{
-  "name": "com.justwatch.gopass",
-  "description": "Gopass wrapper to search and return passwords",
-  "path": "/home/nils/.config/gopass/gopass_wrapper.sh",
-  "type": "stdio",
-  "allowed_extensions": [
-    "{eec37db0-22ad-4bf1-9068-5ae08df8c7e9}"
-  ]
-}
-  '';
+  home.file.".mozilla/native-messaging-hosts/com.justwatch.gopass.json".text =
+    ''
+      {
+        "name": "com.justwatch.gopass",
+        "description": "Gopass wrapper to search and return passwords",
+        "path": "/home/nils/.config/gopass/gopass_wrapper.sh",
+        "type": "stdio",
+        "allowed_extensions": [
+          "{eec37db0-22ad-4bf1-9068-5ae08df8c7e9}"
+        ]
+      }
+    '';
 
   home.file.".mozilla/native-messaging-hosts/de.nilsalex.yktotp.json".text = ''
-{
-  "name": "de.nilsalex.yktotp",
-  "description": "Retrieve a TOTP form a YubiKey",
-  "path": "${yktotp-jsonapi}/bin/yktotp-jsonapi",
-  "type": "stdio",
-  "allowed_extensions": [
-    "extension@yktotp"
-  ]
-}
+    {
+      "name": "de.nilsalex.yktotp",
+      "description": "Retrieve a TOTP form a YubiKey",
+      "path": "${yktotp-jsonapi}/bin/yktotp-jsonapi",
+      "type": "stdio",
+      "allowed_extensions": [
+        "extension@yktotp"
+      ]
+    }
   '';
 
   programs.vscode = {
@@ -579,9 +524,7 @@ exit $?
       dracula-theme.theme-dracula
       vscodevim.vim
     ];
-    userSettings = {
-      "window.titleBarStyle" = "custom";
-    };
+    userSettings = { "window.titleBarStyle" = "custom"; };
   };
 
   programs.direnv.enable = true;
@@ -594,7 +537,5 @@ exit $?
     };
   };
 
-  programs.awscli = {
-    enable = true;
-  };
+  programs.awscli = { enable = true; };
 }
