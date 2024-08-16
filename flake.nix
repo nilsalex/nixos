@@ -15,23 +15,7 @@
           system = "x86_64-linux";
           specialArgs = attrs;
           modules = [
-            ({ config, pkgs, ... }:
-
-              let
-                overlays = [
-                  (final: prev: {
-                    clamav = prev.clamav.overrideAttrs (old: rec {
-                      version = "1.4.0";
-                      src = pkgs.fetchurl {
-                        url =
-                          "https://www.clamav.net/downloads/production/${old.pname}-${version}.tar.gz";
-                        hash =
-                          "sha256-1nqymeXKBdrT2imaXqc9YCCTcqW+zX8TuaM8KQM4pOY=";
-                      };
-                    });
-                  })
-                ];
-              in { nixpkgs.overlays = overlays; })
+            (import ./overlays.nix)
             (import ./configuration.nix { inherit hostname hardwareConfig; })
             home-manager.nixosModules.home-manager
             {
