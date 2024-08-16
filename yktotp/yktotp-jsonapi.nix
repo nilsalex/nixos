@@ -1,4 +1,6 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 
 pkgs.rustPlatform.buildRustPackage rec {
   pname = "yktotp-jsonapi";

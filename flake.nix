@@ -8,9 +8,17 @@
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2";
   };
 
-  outputs = { self, nixpkgs, home-manager, neovim-config, ... }@attrs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      neovim-config,
+      ...
+    }@attrs:
     let
-      mkHost = { hostname, hardwareConfig }:
+      mkHost =
+        { hostname, hardwareConfig }:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = attrs;
@@ -21,14 +29,19 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.nils = { pkgs, ... }: {
-                imports =
-                  [ neovim-config.homeManagerModules.neovim ./home.nix ];
-              };
+              home-manager.users.nils =
+                { pkgs, ... }:
+                {
+                  imports = [
+                    neovim-config.homeManagerModules.neovim
+                    ./home.nix
+                  ];
+                };
             }
           ];
         };
-    in {
+    in
+    {
       nixosConfigurations = {
         linux = mkHost {
           hostname = "linux";
