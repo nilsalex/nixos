@@ -99,6 +99,7 @@ in
     libreoffice
     tenv
     terraform-ls
+    terraform-docs
     tflint
     restic
     zig
