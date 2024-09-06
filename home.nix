@@ -88,6 +88,7 @@ in
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
     nodePackages.pnpm
+    playwright
     playwright-driver.browsers
     dotnet-sdk_8
     omnisharp-roslyn
