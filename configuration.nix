@@ -122,6 +122,7 @@
   services.clamav = {
     daemon.enable = true;
     scanner.enable = true;
+    scanner.interval = "Son *-*-* 04:00:00";
     updater.enable = true;
     fangfrisch.enable = true;
   };
