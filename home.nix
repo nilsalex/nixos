@@ -117,6 +117,7 @@ in
     stern
     nixfmt-rfc-style
     npm-groovy-lint
+    haskellPackages.fourmolu
   ];
 
   home.sessionVariables =
