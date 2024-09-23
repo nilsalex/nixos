@@ -157,7 +157,7 @@ in
     font = {
       name = "FiraCode Nerd Font";
     };
-    theme = "One Dark";
+    themeFile = "OneDark";
   };
 
   programs.git = {
