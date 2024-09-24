@@ -129,6 +129,7 @@ in
       NIXOS_OZONE_WL = "1";
       XDG_DATA_DIRS = schemadir + ":$XDG_DATA_DIRS";
       _JAVA_AWT_WM_NONREPARENTING = "1";
+      PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
       PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
     };
 
