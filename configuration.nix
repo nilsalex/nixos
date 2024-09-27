@@ -110,8 +110,8 @@
 
   services.upower.enable = true;
 
-  services.printing.enable = true;
-  services.avahi.enable = true;
+  services.printing.enable = false;
+  services.avahi.enable = false;
   services.avahi.nssmdns4 = true;
 
   services.dbus = {
