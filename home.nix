@@ -81,6 +81,7 @@ in
     grim
     slurp
     gimp
+    freemind
     freeplane
     feh
     nodejs_22
