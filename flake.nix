@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOs/nixpkgs/nixos-24.05";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2";
@@ -12,6 +13,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-stable,
       home-manager,
       neovim-config,
       ...
@@ -23,7 +25,9 @@
           system = "x86_64-linux";
           specialArgs = attrs;
           modules = [
-            (import ./overlays.nix)
+            (import ./overlays.nix {
+              pkgs-stable = nixpkgs-stable.legacyPackages.x86_64-linux;
+            })
             (import ./configuration.nix { inherit hostname hardwareConfig; })
             home-manager.nixosModules.home-manager
             {
