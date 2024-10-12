@@ -118,6 +118,8 @@ in
     nixfmt-rfc-style
     npm-groovy-lint
     haskellPackages.fourmolu
+    haskellPackages.stack
+    haskellPackages.cabal-install
   ];
 
   home.sessionVariables =
