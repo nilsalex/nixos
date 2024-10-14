@@ -1,8 +1,8 @@
-{ pkgs-stable, ... }:
+{ pkgs, ... }:
 {
   nixpkgs.overlays = [
     (final: prev: {
-      freeplane = pkgs-stable.freeplane;
+      freeplane = pkgs.freeplane;
     })
   ];
 }
