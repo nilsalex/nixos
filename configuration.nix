@@ -50,7 +50,7 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.latest;
     settings = {
       allowed-users = [ "nils" ];
       trusted-public-keys = [

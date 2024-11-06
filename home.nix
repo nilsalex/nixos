@@ -39,7 +39,7 @@ in
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     noto-fonts
     noto-fonts-emoji
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-extra
     dejavu_fonts
     liberation_ttf
@@ -60,7 +60,7 @@ in
     stylua
     texlive.combined.scheme-medium
     mupdf
-    xdg_utils
+    xdg-utils
     slack
     nil
     xdg-desktop-portal
