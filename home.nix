@@ -472,6 +472,8 @@ in
 
       # configure gtk
       exec configure-gtk
+
+      exec sleep 2; systemctl --user start kanshi.service
     '';
     wrapperFeatures = {
       base = true;
