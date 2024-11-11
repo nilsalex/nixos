@@ -383,7 +383,7 @@ in
   };
 
   services.kanshi = {
-    enable = false;
+    enable = true;
     profiles = {
       undocked = {
         outputs = [
@@ -398,17 +398,18 @@ in
         outputs = [
           {
             criteria = "eDP-1";
-            status = "disable";
-          }
-          {
-            criteria = "Dell Inc. DELL U2719D 92WTV13";
             status = "enable";
             position = "0,0";
           }
           {
+            criteria = "Dell Inc. DELL U2719D 92WTV13";
+            status = "enable";
+            position = "1920,0";
+          }
+          {
             criteria = "Dell Inc. DELL U2719D FHMTLS2";
             status = "enable";
-            position = "2560,0";
+            position = "4480,0";
           }
         ];
       };
