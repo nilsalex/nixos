@@ -432,11 +432,11 @@ in
           xkb_options = "compose:ralt";
         };
       };
-      output = {
-        eDP-1 = {
-          scale = "1.3";
-        };
-      };
+      # output = {
+      #   eDP-1 = {
+      #     scale = "1.3";
+      #   };
+      # };
       menu = "bemenu-run";
       fonts = {
         names = [ "FiraCode Nerd Font" ];
