@@ -72,6 +72,7 @@ in
     configure-gtk
     gopass
     gopass-jsonapi
+    git-credential-gopass
     thunderbird
     yubikey-manager
     solaar
@@ -171,6 +172,9 @@ in
     extraConfig = {
       init = {
         defaultBranch = "main";
+      };
+      credential = {
+        helper = "gopass";
       };
     };
   };
