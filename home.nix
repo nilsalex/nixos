@@ -404,12 +404,12 @@ in
           {
             criteria = "Dell Inc. DELL U2719D 92WTV13";
             status = "enable";
-            position = "1920,0";
+            position = "1477,0";
           }
           {
             criteria = "Dell Inc. DELL U2719D FHMTLS2";
             status = "enable";
-            position = "4480,0";
+            position = "4037,0";
           }
         ];
       };
@@ -432,11 +432,11 @@ in
           xkb_options = "compose:ralt";
         };
       };
-      # output = {
-      #   eDP-1 = {
-      #     scale = "1.3";
-      #   };
-      # };
+      output = {
+        eDP-1 = {
+          scale = "1.3";
+        };
+      };
       menu = "bemenu-run";
       fonts = {
         names = [ "FiraCode Nerd Font" ];
