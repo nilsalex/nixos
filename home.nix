@@ -384,18 +384,24 @@ in
 
   services.kanshi = {
     enable = true;
-    profiles = {
-      undocked = {
-        outputs = [
+    settings = [
+      {
+        output.criteria = "eDP-1";
+        output.scale = 1.3;
+      }
+      {
+        profile.name = "undocked";
+        profile.outputs = [
           {
             criteria = "eDP-1";
             status = "enable";
             position = "0,0";
           }
         ];
-      };
-      docked = {
-        outputs = [
+      }
+      {
+        profile.name = "docked";
+        profile.outputs = [
           {
             criteria = "eDP-1";
             status = "enable";
@@ -412,8 +418,8 @@ in
             position = "4037,0";
           }
         ];
-      };
-    };
+      }
+    ];
   };
 
   services.mako = {
@@ -430,11 +436,6 @@ in
         "*" = {
           xkb_numlock = "enabled";
           xkb_options = "compose:ralt";
-        };
-      };
-      output = {
-        eDP-1 = {
-          scale = "1.3";
         };
       };
       menu = "bemenu-run";
