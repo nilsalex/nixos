@@ -423,6 +423,20 @@ in
           }
         ];
       }
+      {
+        profile.name = "ultrawide";
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+          {
+            criteria = "Dell Inc. DELL U3824DW Unknown";
+            status = "enable";
+            position = "1477,0";
+          }
+        ];
+      }
     ];
   };
 
@@ -476,9 +490,9 @@ in
       # exec systemctl --user start pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
 
       # configure gtk
-      exec configure-gtk
+      exec_always configure-gtk
 
-      exec sleep 2; systemctl --user start kanshi.service
+      exec_always systemctl --user restart kanshi.service
     '';
     wrapperFeatures = {
       base = true;
