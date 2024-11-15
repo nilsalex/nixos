@@ -431,9 +431,8 @@ in
             status = "disable";
           }
           {
-            criteria = "Dell Inc. DELL U3824DW Unknown";
+            criteria = "Dell Inc. DELL U3824DW HVPMZR3";
             status = "enable";
-            position = "1477,0";
           }
         ];
       }
