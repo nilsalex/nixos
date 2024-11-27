@@ -120,8 +120,6 @@
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
 
-  systemd.services.cups-browsed.enable = false;
-
   services.dbus = {
     enable = true;
     packages = [ pkgs.gcr ];
