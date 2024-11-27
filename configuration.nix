@@ -116,9 +116,11 @@
 
   services.upower.enable = true;
 
-  services.printing.enable = false;
-  services.avahi.enable = false;
+  services.printing.enable = true;
+  services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
+
+  systemd.services.cups-browsed.enable = false;
 
   services.dbus = {
     enable = true;
