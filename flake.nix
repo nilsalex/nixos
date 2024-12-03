@@ -6,6 +6,8 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2";
+    nix-ld.url = "github:Mic92/nix-ld";
+    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -14,6 +16,7 @@
       nixpkgs,
       home-manager,
       neovim-config,
+      nix-ld,
       ...
     }@attrs:
     let
@@ -23,8 +26,10 @@
           system = "x86_64-linux";
           specialArgs = attrs;
           modules = [
+            nix-ld.nixosModules.nix-ld
             (import ./overlays.nix)
             (import ./configuration.nix { inherit hostname hardwareConfig; })
+            { programs.nix-ld.dev.enable = true; }
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
