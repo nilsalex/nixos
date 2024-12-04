@@ -37,7 +37,6 @@ in
     pulseaudio
     pavucontrol
     nerd-fonts.fira-code
-    #    (nerdfonts.override { fonts = [ "FiraCode" ]; })
     noto-fonts
     noto-fonts-emoji
     noto-fonts-cjk-sans
@@ -93,8 +92,8 @@ in
     nodePackages.pnpm
     playwright-driver.browsers
     dotnet-sdk_8
-    # omnisharp-roslyn
-    # jetbrains.rider
+    omnisharp-roslyn
+    jetbrains.rider
     tree
     ncdu
     wtype
