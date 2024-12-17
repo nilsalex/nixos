@@ -86,7 +86,7 @@ in
     freeplane
     feh
     nodejs_22
-    nodePackages."@tailwindcss/language-server"
+    tailwindcss-language-server
     nodePackages.typescript-language-server
     nodePackages.dockerfile-language-server-nodejs
     nodePackages.pnpm
