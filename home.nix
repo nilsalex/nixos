@@ -121,6 +121,7 @@ in
     haskellPackages.fourmolu
     haskellPackages.stack
     haskellPackages.cabal-install
+    ghostty
   ];
 
   home.sessionVariables =
