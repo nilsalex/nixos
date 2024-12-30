@@ -529,16 +529,7 @@ in
     platformTheme.name = "gtk";
   };
 
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "*" = {
-        extraOptions = {
-          SetEnv = "XTERM=xterm-256color";
-        };
-      };
-    };
-  };
+  programs.ssh.enable = true;
 
   home.file.".config/gopass/gopass_wrapper.sh" = {
     text = ''
