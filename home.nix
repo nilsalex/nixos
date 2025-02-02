@@ -122,6 +122,7 @@ in
     haskellPackages.stack
     haskellPackages.cabal-install
     ghostty
+    vscode-langservers-extracted
   ];
 
   home.sessionVariables =
