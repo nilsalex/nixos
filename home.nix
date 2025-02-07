@@ -714,6 +714,21 @@ in
       ];
       macros = [
         {
+          map = [ "index" ];
+          key = "S";
+          action = "<tag-prefix><enter-command>unset resolve<enter><tag-prefix><clear-flag>N<tag-prefix><enter-command>set resolve<enter><tag-prefix><save-message>=Junk<enter>";
+        }
+        {
+          map = [ "pager" ];
+          key = "S";
+          action = "<save-message>=Junk<enter>";
+        }
+        {
+          map = [ "index" ];
+          key = "t";
+          action = "c=<tab><tab><tab>";
+        }
+        {
           action = "<pipe-message> urlscan<Enter>";
           key = "\\cb";
           map = [
