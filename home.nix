@@ -668,30 +668,67 @@ in
     };
   };
 
-  programs.neomutt = {
-    enable = true;
-    sidebar = {
+  programs.neomutt =
+    let
+      mailcap_file = pkgs.writeText "mailcap" ''
+        text/html; ${pkgs.lynx}/bin/lynx %s
+        text/html; ${pkgs.lynx}/bin/lynx -dump %s; copiousoutput
+      '';
+    in
+    {
       enable = true;
+      sidebar = {
+        enable = true;
+      };
+      sort = "threads";
+      settings = {
+        sort_browser = "reverse-date";
+        sort_aux = "last-date-received";
+        mailcap_path = "${mailcap_file}";
+        envelope_from = "yes";
+        edit_headers = "yes";
+      };
+      binds = [
+        {
+          key = "g";
+          action = "noop";
+        }
+        {
+          key = "gg";
+          action = "first-entry";
+        }
+        {
+          key = "G";
+          action = "last-entry";
+        }
+        {
+          map = [
+            "index"
+            "pager"
+          ];
+          key = "R";
+          action = "group-reply";
+        }
+      ];
+      macros = [
+        {
+          action = "<pipe-message> urlscan<Enter>";
+          key = "\\cb";
+          map = [
+            "index"
+            "pager"
+          ];
+        }
+        {
+          action = "<pipe-entry> urlscan<Enter>";
+          key = "\\cb";
+          map = [
+            "attach"
+            "compose"
+          ];
+        }
+      ];
     };
-    macros = [
-      {
-        action = "<pipe-message> urlscan<Enter>";
-        key = "\\cb";
-        map = [
-          "index"
-          "pager"
-        ];
-      }
-      {
-        action = "<pipe-entry> urlscan<Enter>";
-        key = "\\cb";
-        map = [
-          "attach"
-          "compose"
-        ];
-      }
-    ];
-  };
 
   programs.mbsync = {
     enable = true;
