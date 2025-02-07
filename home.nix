@@ -671,8 +671,10 @@ in
   programs.neomutt =
     let
       mailcap_file = pkgs.writeText "mailcap" ''
-        text/html; ${pkgs.lynx}/bin/lynx %s
-        text/html; ${pkgs.lynx}/bin/lynx -dump %s; copiousoutput
+        text/html; ${pkgs.elinks}/bin/elinks %s; nametemplate=%s.html
+        text/html; ${pkgs.elinks}/bin/elinks -dump %s; nametemplate=%s.html; copiousoutput
+        application/pdf; ${pkgs.mupdf}/bin/mupdf %s
+        image/*; ${pkgs.feh}/bin/feh %s
       '';
     in
     {
