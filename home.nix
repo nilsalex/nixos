@@ -25,6 +25,8 @@ let
 
   yktotp-jsonapi = pkgs.callPackage ./yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
 
+  mailAccount = "nils" + "@" + "famalex.de";
+
 in
 {
   home.username = "nils";
@@ -631,6 +633,61 @@ in
   };
 
   programs.java = {
+    enable = true;
+  };
+
+  accounts.email.accounts.personal = {
+    primary = true;
+    address = mailAccount;
+    realName = "Nils Alex";
+    userName = mailAccount;
+    passwordCommand = "${pkgs.gopass}/bin/gopass show -o personal/email/nils@famalex.de";
+    imap = {
+      host = "sslin.df.eu";
+      port = 993;
+    };
+    smtp = {
+      host = "sslout.df.eu";
+      port = 25;
+      tls = {
+        enable = true;
+        useStartTls = true;
+      };
+    };
+    neomutt = {
+      enable = true;
+    };
+    mbsync = {
+      enable = true;
+      create = "maildir";
+    };
+    notmuch = {
+      enable = true;
+      neomutt.enable = true;
+    };
+  };
+
+  programs.neomutt = {
+    enable = true;
+    vimKeys = true;
+    sidebar = {
+      enable = true;
+    };
+  };
+
+  programs.mbsync = {
+    enable = true;
+  };
+
+  programs.notmuch = {
+    enable = true;
+  };
+
+  programs.msmtp = {
+    enable = true;
+  };
+
+  services.mbsync = {
     enable = true;
   };
 }
