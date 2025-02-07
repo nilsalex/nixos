@@ -123,6 +123,7 @@ in
     haskellPackages.cabal-install
     ghostty
     vscode-langservers-extracted
+    ausweisapp
   ];
 
   home.sessionVariables =

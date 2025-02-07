@@ -17,7 +17,11 @@
 
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
-  networking.firewall.enable = true;
+
+  networking.firewall = {
+    enable = true;
+    allowedUDPPorts = [ 24727 ];
+  };
 
   powerManagement.enable = true;
   services.thermald.enable = true;
