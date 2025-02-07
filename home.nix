@@ -126,6 +126,7 @@ in
     ghostty
     vscode-langservers-extracted
     ausweisapp
+    urlscan
   ];
 
   home.sessionVariables =
@@ -672,6 +673,24 @@ in
     sidebar = {
       enable = true;
     };
+    macros = [
+      {
+        action = "<pipe-message> urlscan<Enter>";
+        key = "\\cb";
+        map = [
+          "index"
+          "pager"
+        ];
+      }
+      {
+        action = "<pipe-entry> urlscan<Enter>";
+        key = "\\cb";
+        map = [
+          "attach"
+          "compose"
+        ];
+      }
+    ];
   };
 
   programs.mbsync = {
