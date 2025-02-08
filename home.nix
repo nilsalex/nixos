@@ -75,7 +75,6 @@ in
     gopass
     gopass-jsonapi
     git-credential-gopass
-    thunderbird
     yubikey-manager
     solaar
     dig
