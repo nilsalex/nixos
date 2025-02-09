@@ -656,6 +656,13 @@ in
     };
     neomutt = {
       enable = true;
+      extraMailboxes = [
+        "Drafts"
+        "Junk"
+        "Notes"
+        "Sent"
+        "Trash"
+      ];
     };
     mbsync = {
       enable = true;
@@ -688,6 +695,7 @@ in
         mailcap_path = "${mailcap_file}";
         envelope_from = "yes";
         edit_headers = "yes";
+        mail_check_stats = "yes";
       };
       binds = [
         {
@@ -710,6 +718,30 @@ in
           key = "R";
           action = "group-reply";
         }
+        {
+          map = [
+            "index"
+            "pager"
+          ];
+          key = "\\CP";
+          action = "sidebar-prev";
+        }
+        {
+          map = [
+            "index"
+            "pager"
+          ];
+          key = "\\CN";
+          action = "sidebar-next";
+        }
+        {
+          map = [
+            "index"
+            "pager"
+          ];
+          key = "\\CO";
+          action = "sidebar-open";
+        }
       ];
       macros = [
         {
@@ -729,7 +761,7 @@ in
         }
         {
           action = "<pipe-message> urlscan<Enter>";
-          key = "\\cb";
+          key = "\\Cb";
           map = [
             "index"
             "pager"
@@ -737,7 +769,7 @@ in
         }
         {
           action = "<pipe-entry> urlscan<Enter>";
-          key = "\\cb";
+          key = "\\Cb";
           map = [
             "attach"
             "compose"
