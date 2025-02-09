@@ -900,6 +900,11 @@ in
         api_base: "https://chat.model.tngtech.com/v1"
         api_key_name: tng-ai-token
         can_stream: true
+      - model_id: gpt-4o
+        model_name: gpt-4o
+        api_base: "https://taia.tngtech.com/proxy/openai/v1"
+        api_key_name: tng-ai-token
+        can_stream: true
     '';
   };
 
