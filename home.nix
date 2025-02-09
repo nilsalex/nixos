@@ -907,4 +907,8 @@ in
     text = "";
   };
 
+  home.file.".config/io.datasette.llm/default_model.txt" = {
+    text = "llama-3.3-70b";
+  };
+
 }
