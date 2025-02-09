@@ -823,4 +823,66 @@ in
     };
   };
 
+  home.file.".config/urlscan/config.json" = {
+    text = ''
+      {
+          "palettes": {
+              "bw": [
+                  [
+                      "header",
+                      "black",
+                      "light gray",
+                      "standout"
+                  ],
+                  [
+                      "footer",
+                      "black",
+                      "light gray",
+                      "standout"
+                  ],
+                  [
+                      "search",
+                      "black",
+                      "light gray",
+                      "standout"
+                  ],
+                  [
+                      "msgtext",
+                      "",
+                      ""
+                  ],
+                  [
+                      "msgtext:ellipses",
+                      "white",
+                      "black"
+                  ],
+                  [
+                      "urlref:number:braces",
+                      "white",
+                      "black"
+                  ],
+                  [
+                      "urlref:number",
+                      "white",
+                      "black",
+                      "standout"
+                  ],
+                  [
+                      "urlref:url",
+                      "white",
+                      "black",
+                      "standout"
+                  ],
+                  [
+                      "url:sel",
+                      "black",
+                      "light gray",
+                      "bold"
+                  ]
+              ]
+          }
+      }
+    '';
+  };
+
 }
