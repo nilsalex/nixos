@@ -19,11 +19,13 @@ let
       '';
   };
 
-  npm-groovy-lint = pkgs.callPackage ./npm-groovy-lint/default.nix { pkgs = pkgs; };
+  npm-groovy-lint = pkgs.callPackage ./derivations/npm-groovy-lint/default.nix { pkgs = pkgs; };
 
-  inkscape-silhouette = pkgs.callPackage ./inkscape/inkscape-silhouette.nix { pkgs = pkgs; };
+  inkscape-silhouette = pkgs.callPackage ./derivations/inkscape/inkscape-silhouette.nix {
+    pkgs = pkgs;
+  };
 
-  yktotp-jsonapi = pkgs.callPackage ./yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
+  yktotp-jsonapi = pkgs.callPackage ./derivations/yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
 
   mailAccount = "nils" + "@" + "famalex.de";
 
@@ -126,6 +128,7 @@ in
     vscode-langservers-extracted
     ausweisapp
     urlscan
+    llm
   ];
 
   home.sessionVariables =
@@ -883,6 +886,25 @@ in
           }
       }
     '';
+  };
+
+  home.file.".config/io.datasette.llm/extra-openai-models.yaml" = {
+    text = ''
+      - model_id: llama-3.3-70b
+        model_name: meta-llama/Llama-3.3-70B-Instruct
+        api_base: "https://chat.model.tngtech.com/v1"
+        api_key_name: tng-ai-token
+        can_stream: true
+      - model_id: deepseek
+        model_name: deepseek-ai/DeepSeek-R1-Distill-Qwen-32B
+        api_base: "https://chat.model.tngtech.com/v1"
+        api_key_name: tng-ai-token
+        can_stream: true
+    '';
+  };
+
+  home.file.".config/io.datasette.llm/logs-off" = {
+    text = "";
   };
 
 }
