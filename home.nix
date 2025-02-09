@@ -827,7 +827,7 @@ in
     text = ''
       {
           "palettes": {
-              "bw": [
+              "default": [
                   [
                       "header",
                       "black",
