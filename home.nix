@@ -748,6 +748,14 @@ in
       ];
       macros = [
         {
+          map = [
+            "index"
+            "pager"
+          ];
+          key = "<f5>";
+          action = "<shell-escape>${pkgs.isync}/bin/mbsync -V -a<enter>";
+        }
+        {
           map = [ "index" ];
           key = "S";
           action = "<tag-prefix><enter-command>unset resolve<enter><tag-prefix><clear-flag>N<tag-prefix><enter-command>set resolve<enter><tag-prefix><save-message>=Junk<enter>";
@@ -763,7 +771,7 @@ in
           action = "c=<tab><tab><tab>";
         }
         {
-          action = "<pipe-message> urlscan<Enter>";
+          action = "<pipe-message> ${pkgs.urlscan}/bin/urlscan<Enter>";
           key = "\\Cb";
           map = [
             "index"
@@ -771,7 +779,7 @@ in
           ];
         }
         {
-          action = "<pipe-entry> urlscan<Enter>";
+          action = "<pipe-entry> ${pkgs.urlscan}/bin/urlscan<Enter>";
           key = "\\Cb";
           map = [
             "attach"
