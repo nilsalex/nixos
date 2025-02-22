@@ -129,6 +129,7 @@ in
     ausweisapp
     urlscan
     llm
+    git-absorb
   ];
 
   home.sessionVariables =
