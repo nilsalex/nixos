@@ -130,6 +130,7 @@ in
     urlscan
     llm
     git-absorb
+    mosh
   ];
 
   home.sessionVariables =
