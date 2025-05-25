@@ -451,7 +451,7 @@ in
 
   services.mako = {
     enable = true;
-    defaultTimeout = 30000;
+    settings.default-timeout = 30000;
   };
 
   wayland.windowManager.sway = {
