@@ -650,15 +650,19 @@ in
     userName = mailAccount;
     passwordCommand = "${pkgs.gopass}/bin/gopass show -o personal/email/nils@famalex.de";
     imap = {
-      host = "sslin.df.eu";
+      host = "mail.your-server.de";
       port = 993;
-    };
-    smtp = {
-      host = "sslout.df.eu";
-      port = 25;
       tls = {
         enable = true;
-        useStartTls = true;
+        useStartTls = false;
+      };
+    };
+    smtp = {
+      host = "mail.your-server.de";
+      port = 465;
+      tls = {
+        enable = true;
+        useStartTls = false;
       };
     };
     neomutt = {
