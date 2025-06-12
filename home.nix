@@ -673,6 +673,7 @@ in
         "Notes"
         "Sent"
         "Trash"
+        "spambucket"
       ];
     };
     mbsync = {
