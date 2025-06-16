@@ -131,6 +131,7 @@ in
     llm
     git-absorb
     mosh
+    csharpier
   ];
 
   home.sessionVariables =
