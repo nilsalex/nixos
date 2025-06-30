@@ -818,29 +818,29 @@ in
   xdg.mimeApps = {
     enable = true;
     associations.added = {
-      "x-scheme-handler/http" = [ "firefox.desktop;" ];
-      "x-scheme-handler/https" = [ "firefox.desktop;" ];
-      "x-scheme-handler/chrome" = [ "firefox.desktop;" ];
-      "text/html" = [ "firefox.desktop;" ];
-      "application/x-extension-htm" = [ "firefox.desktop;" ];
-      "application/x-extension-html" = [ "firefox.desktop;" ];
-      "application/x-extension-shtml" = [ "firefox.desktop;" ];
-      "application/xhtml+xml" = [ "firefox.desktop;" ];
-      "application/x-extension-xhtml" = [ "firefox.desktop;" ];
-      "application/x-extension-xht" = [ "firefox.desktop;" ];
+      "x-scheme-handler/http" = [ "google-chrome.desktop;" ];
+      "x-scheme-handler/https" = [ "google-chrome.desktop;" ];
+      "x-scheme-handler/chrome" = [ "google-chrome.desktop;" ];
+      "text/html" = [ "google-chrome.desktop;" ];
+      "application/x-extension-htm" = [ "google-chrome.desktop;" ];
+      "application/x-extension-html" = [ "google-chrome.desktop;" ];
+      "application/x-extension-shtml" = [ "google-chrome.desktop;" ];
+      "application/xhtml+xml" = [ "google-chrome.desktop;" ];
+      "application/x-extension-xhtml" = [ "google-chrome.desktop;" ];
+      "application/x-extension-xht" = [ "google-chrome.desktop;" ];
       "image/png" = [ "gimp.desktop;" ];
     };
     defaultApplications = {
       "application/pdf" = [ "mupdf.desktop" ];
-      "text/html" = [ "firefox.desktop" ];
-      "x-scheme-handler/http" = [ "firefox.desktop" ];
-      "x-scheme-handler/https" = [ "firefox.desktop" ];
-      "application/x-extension-htm" = [ "firefox.desktop" ];
-      "application/x-extension-html" = [ "firefox.desktop" ];
-      "application/x-extension-shtml" = [ "firefox.desktop" ];
-      "application/xhtml+xml" = [ "firefox.desktop" ];
-      "application/x-extension-xhtml" = [ "firefox.desktop" ];
-      "application/x-extension-xht" = [ "firefox.desktop" ];
+      "text/html" = [ "google-chrome.desktop" ];
+      "x-scheme-handler/http" = [ "google-chrome.desktop" ];
+      "x-scheme-handler/https" = [ "google-chrome.desktop" ];
+      "application/x-extension-htm" = [ "google-chrome.desktop" ];
+      "application/x-extension-html" = [ "google-chrome.desktop" ];
+      "application/x-extension-shtml" = [ "google-chrome.desktop" ];
+      "application/xhtml+xml" = [ "google-chrome.desktop" ];
+      "application/x-extension-xhtml" = [ "google-chrome.desktop" ];
+      "application/x-extension-xht" = [ "google-chrome.desktop" ];
     };
   };
 
