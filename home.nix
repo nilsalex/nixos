@@ -144,6 +144,7 @@ in
       _JAVA_AWT_WM_NONREPARENTING = "1";
       PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
       PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
+      DOTNET_ROOT = "${pkgs.dotnet-sdk_8}/share/dotnet";
     };
 
   home.shellAliases = {
