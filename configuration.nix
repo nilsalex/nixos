@@ -70,6 +70,7 @@
   environment.systemPackages = with pkgs; [
     vim
     win-virtio
+    networkmanager-openvpn
   ];
 
   environment.etc = {
