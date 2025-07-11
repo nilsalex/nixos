@@ -447,6 +447,21 @@ in
           }
         ];
       }
+      {
+        profile.name = "single";
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            status = "enable";
+            position = "0,0";
+          }
+          {
+            criteria = "*";
+            status = "enable";
+            position = "1477,0";
+          }
+        ];
+      }
     ];
   };
 
