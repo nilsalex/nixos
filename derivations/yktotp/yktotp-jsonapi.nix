@@ -13,7 +13,6 @@ pkgs.rustPlatform.buildRustPackage rec {
     hash = "sha256-Bj1M0lVtbulpnhVrhExnT4KuWO9QBJUsMHfRvxwCJ6c=";
   };
 
-  useFetchCargoVendor = true;
   cargoHash = "sha256-w4AfmMgOKe9gKV4Onp/c5BXnAQCy1mnN76yJBz34MBA=";
 
   buildInputs = [ pkgs.pcsclite ];
