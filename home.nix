@@ -924,6 +924,11 @@ in
 
   home.file.".config/io.datasette.llm/extra-openai-models.yaml" = {
     text = ''
+      - model_id: chimera
+        model_name: tngtech/DeepSeek-TNG-R1T2-Chimera
+        api_base: "https://chat.model.tngtech.com/v1"
+        api_key_name: tng-ai-token
+        can_stream: true
       - model_id: llama-3.3-70b
         model_name: meta-llama/Llama-3.3-70B-Instruct
         api_base: "https://chat.model.tngtech.com/v1"
@@ -947,7 +952,7 @@ in
   };
 
   home.file.".config/io.datasette.llm/default_model.txt" = {
-    text = "llama-3.3-70b";
+    text = "chimera";
   };
 
 }
