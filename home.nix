@@ -94,7 +94,6 @@ in
     nodePackages.dockerfile-language-server-nodejs
     nodePackages.pnpm
     playwright-driver.browsers
-    dotnet-sdk_8
     dotnet-sdk_9
     omnisharp-roslyn
     jetbrains.rider
