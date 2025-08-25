@@ -95,6 +95,7 @@ in
     nodePackages.pnpm
     playwright-driver.browsers
     dotnet-sdk_8
+    dotnet-sdk_9
     omnisharp-roslyn
     jetbrains.rider
     tree
@@ -144,7 +145,7 @@ in
       _JAVA_AWT_WM_NONREPARENTING = "1";
       PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
       PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
-      DOTNET_ROOT = "${pkgs.dotnet-sdk_8}/share/dotnet";
+      DOTNET_ROOT = "${pkgs.dotnet-sdk_9}/share/dotnet";
     };
 
   home.shellAliases = {
