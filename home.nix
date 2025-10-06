@@ -91,7 +91,7 @@ in
     nodejs_22
     tailwindcss-language-server
     nodePackages.typescript-language-server
-    nodePackages.dockerfile-language-server-nodejs
+    dockerfile-language-server
     nodePackages.pnpm
     playwright-driver.browsers
     dotnet-sdk_9
