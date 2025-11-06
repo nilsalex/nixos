@@ -42,9 +42,8 @@ in
     pavucontrol
     nerd-fonts.fira-code
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     noto-fonts-cjk-sans
-    noto-fonts-extra
     dejavu_fonts
     liberation_ttf
     bemenu
@@ -177,10 +176,10 @@ in
   programs.git = {
     enable = true;
     lfs.enable = true;
-    aliases = {
-      root = "rev-parse --show-toplevel";
-    };
-    extraConfig = {
+    settings = {
+      alias = {
+        root = "rev-parse --show-toplevel";
+      };
       init = {
         defaultBranch = "main";
       };

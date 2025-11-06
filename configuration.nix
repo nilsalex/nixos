@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.firmware = [
-    pkgs.firmwareLinuxNonfree
+    pkgs.linux-firmware
     pkgs.sof-firmware
   ];
 
@@ -74,7 +74,7 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    win-virtio
+    virtio-win
   ];
 
   environment.etc = {
