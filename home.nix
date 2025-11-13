@@ -434,6 +434,26 @@ in
         ];
       }
       {
+        profile.name = "docked2";
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            status = "enable";
+            position = "0,0";
+          }
+          {
+            criteria = "Dell Inc. DELL U2719D JFSKNS2";
+            status = "enable";
+            position = "1477,0";
+          }
+          {
+            criteria = "Dell Inc. DELL U2719D CCSKNS2";
+            status = "enable";
+            position = "4037,0";
+          }
+        ];
+      }
+      {
         profile.name = "ultrawide";
         profile.outputs = [
           {
