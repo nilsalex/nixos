@@ -131,6 +131,9 @@ in
     git-absorb
     mosh
     csharpier
+    tailscale
+    tailscaled
+    code-cursor-fhs
   ];
 
   home.sessionVariables =
@@ -159,8 +162,8 @@ in
     enable = true;
     enableVteIntegration = true;
     initExtra = ''
-      # export shell_stack="B''${shell_stack}"
-      # export PS1="[\u@\h \W] ''${shell_stack}\n\$ "
+      export shell_stack="B''${shell_stack}"
+      export PS1="[\u@\h \W] ''${shell_stack}\n\$ "
       [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
     '';
   };
