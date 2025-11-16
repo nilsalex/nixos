@@ -132,7 +132,6 @@ in
     mosh
     csharpier
     tailscale
-    tailscaled
     code-cursor-fhs
   ];
 
