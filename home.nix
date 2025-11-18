@@ -133,6 +133,7 @@ in
     csharpier
     tailscale
     code-cursor-fhs
+    gnupg
   ];
 
   home.sessionVariables =
@@ -204,7 +205,7 @@ in
     pinentry.package = pkgs.pinentry-gnome3;
   };
 
-  programs.gpg.enable = true;
+  # programs.gpg.enable = true;
 
   programs.swaylock = {
     enable = true;
