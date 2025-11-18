@@ -87,7 +87,7 @@ in
     freemind
     freeplane
     feh
-    nodejs_22
+    nodejs_24
     tailwindcss-language-server
     nodePackages.typescript-language-server
     dockerfile-language-server
