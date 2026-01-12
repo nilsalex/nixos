@@ -118,7 +118,7 @@ in
     kubectx
     kubernetes-helm
     stern
-    nixfmt-rfc-style
+    nixfmt
     npm-groovy-lint
     haskellPackages.fourmolu
     haskellPackages.stack
@@ -574,7 +574,10 @@ in
     platformTheme.name = "gtk";
   };
 
-  programs.ssh.enable = true;
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+  };
 
   home.file.".config/gopass/gopass_wrapper.sh" = {
     text = ''
