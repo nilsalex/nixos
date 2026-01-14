@@ -20,7 +20,7 @@
   ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.initrd.luks.devices.crypted.device = "/dev/disk/by-uuid/fa4ea387-9573-46bb-b4b0-c6564e23913e";
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {

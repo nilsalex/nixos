@@ -10,7 +10,16 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.extraModulePackages = [ "v4l2loopback" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+
+  boot.kernelModules = [
+    "kvm-intel"
+    "v4l2loopback"
+  ];
+
+  boot.extraModprobeConfig = ''
+    options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
+  '';
 
   hardware.firmware = [
     pkgs.linux-firmware
