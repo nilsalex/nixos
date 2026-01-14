@@ -10,6 +10,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.extraModulePackages = [ "v4l2loopback" ];
+
   hardware.firmware = [
     pkgs.linux-firmware
     pkgs.sof-firmware
