@@ -863,6 +863,16 @@ in
     enable = true;
   };
 
+  programs.claude-code = {
+    enable = true;
+    settings = {
+      env = {
+        CLAUDE_CODE_ENABLE_TELEMETRY = "0";
+        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
+      };
+    };
+  };
+
   services.mbsync = {
     enable = true;
   };
