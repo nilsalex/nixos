@@ -120,6 +120,14 @@
     libraries = with pkgs; [
       icu
       icu75
+      dbus
+      fontconfig
+      freetype
+      glib
+      libGL
+      libxkbcommon
+      xorg.libX11
+      wayland
     ];
   };
 
