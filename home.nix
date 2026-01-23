@@ -92,7 +92,6 @@ in
     nodePackages.typescript-language-server
     dockerfile-language-server
     nodePackages.pnpm
-    playwright-driver.browsers
     dotnet-sdk_9
     omnisharp-roslyn
     jetbrains.rider
@@ -144,8 +143,6 @@ in
     {
       XDG_DATA_DIRS = schemadir + ":$XDG_DATA_DIRS";
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
-      PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
       DOTNET_ROOT = "${pkgs.dotnet-sdk_9}/share/dotnet";
     };
 
