@@ -133,6 +133,7 @@ in
     tailscale
     code-cursor-fhs
     gnupg
+    opencode
   ];
 
   home.sessionVariables =

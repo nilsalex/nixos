@@ -52,11 +52,46 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1768393167,
+        "narHash": "sha256-n2063BRjHde6DqAz2zavhOOiLUwA3qXt7jQYHyETjX8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2f594d5af95d4fdac67fba60376ec11e482041cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "opencode": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1769260640,
+        "narHash": "sha256-QTRnoenb5f4Hd9CaIn+yCn3VL22t8bgEiZJoQtoRO8c=",
+        "owner": "anomalyco",
+        "repo": "opencode",
+        "rev": "91287dd7bc05b616646474cca2b228be05c7a547",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "repo": "opencode",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "neovim-config": "neovim-config",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "opencode": "opencode"
       }
     }
   },

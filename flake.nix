@@ -6,6 +6,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2";
+    opencode.url = "github:anomalyco/opencode";
   };
 
   outputs =
@@ -14,6 +15,7 @@
       nixpkgs,
       home-manager,
       neovim-config,
+      opencode,
       ...
     }@attrs:
     let
@@ -24,11 +26,19 @@
           specialArgs = attrs;
           modules = [
             (import ./overlays.nix)
+            {
+              nixpkgs.overlays = [
+                (final: prev: {
+                  opencode = opencode.packages.${prev.stdenv.hostPlatform.system}.default;
+                })
+              ];
+            }
             (import ./configuration.nix { inherit hostname hardwareConfig; })
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit opencode; };
               home-manager.users.nils =
                 { pkgs, ... }:
                 {
