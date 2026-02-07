@@ -134,6 +134,7 @@ in
     code-cursor-fhs
     gnupg
     opencode
+    obs-studio
   ];
 
   home.sessionVariables =
