@@ -2,11 +2,11 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOs/nixpkgs/160a4c2be663b0dfef71d14d69fd0b6fa586fa2d";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2";
-    opencode.url = "github:anomalyco/opencode/v1.1.59";
+    opencode.url = "github:anomalyco/opencode";
   };
 
   outputs =
