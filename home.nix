@@ -507,7 +507,16 @@ in
       bars = [ { command = "${pkgs.waybar}/bin/waybar"; } ];
       floating.titlebar = false;
       window.titlebar = false;
+      startup = [
+        {
+          command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway";
+          always = true;
+        }
+      ];
     };
+    extraSessionCommands = ''
+      export XDG_CURRENT_DESKTOP=sway
+    '';
     extraConfig = ''
       # Move workspaces
       bindsym Mod4+Control+Shift+l move workspace to output right
@@ -528,10 +537,6 @@ in
       # Set output for docked/undocked mode
       bindsym Mod4+Shift+d exec swaymsg 'output "Dell Inc. DELL U2719D 92WTV13" position 0 0' && swaymsg 'output "Dell Inc. DELL U2719D FHMTLS2" position 2560 0' && swaymsg 'output eDP-1 disable'
       bindsym Mod4+Shift+u exec swaymsg 'output "eDP-1" enable'
-
-      # # restart stuff
-      # exec systemctl --user stop pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
-      # exec systemctl --user start pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
 
       # configure gtk
       exec_always configure-gtk
@@ -1000,4 +1005,18 @@ in
     text = "chimera";
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+    ];
+    config = {
+      sway = {
+        default = [ "gtk" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+      };
+    };
+  };
 }

@@ -100,6 +100,11 @@
     };
   };
 
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
+
   security.polkit.enable = true;
   security.rtkit.enable = true;
   security.pam.services.swaylock.text = "auth include login";
@@ -156,22 +161,6 @@
     scanner.interval = "Son *-*-* 04:00:00";
     updater.enable = true;
     fangfrisch.enable = true;
-  };
-
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-wlr
-    ];
-    config = {
-      sway = {
-        default = [ "gtk" ];
-        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
-      };
-    };
   };
 
   services.pcscd.enable = true;
