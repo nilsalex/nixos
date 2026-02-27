@@ -84,6 +84,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    tailscale
     vim
     virtio-win
   ];
@@ -124,6 +125,8 @@
     enable = true;
     # libraries = with pkgs; [ ];
   };
+
+  services.tailscale.enable = true;
 
   services.pipewire = {
     enable = true;
