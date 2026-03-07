@@ -1017,10 +1017,10 @@ in
   home.file.".local/bin/yk-otp.sh" = {
     text = ''
       #!/usr/bin/env bash
-      accounts=$(ykman oath accounts list 2>/dev/null)
-      account=$(echo "$accounts" | bemenu -p "YubiKey OTP:")
-      [ -n "$account" ] && ykman oath accounts code "$account" -s | wl-copy \
-          && notify-send "OTP copied" "$account"
+      accounts=$(${pkgs.yubikey-manager}/bin/ykman oath accounts list 2>/dev/null)
+      account=$(echo "$accounts" | ${pkgs.bemenu}/bin/bemenu -p "YubiKey OTP:")
+      [ -n "$account" ] && ${pkgs.yubikey-manager}/bin/ykman oath accounts code "$account" -s | ${pkgs.wl-clipboard}/bin/wl-copy \
+          && ${pkgs.libnotify}/bin/notify-send "OTP copied" "$account"
     '';
     executable = true;
   };
@@ -1028,10 +1028,10 @@ in
   home.file.".local/bin/gopass-menu.sh" = {
     text = ''
       #!/usr/bin/env bash
-      entries=$(gopass ls --flat 2>/dev/null)
-      entry=$(echo "$entries" | bemenu -p "gopass:")
-      [ -n "$entry" ] && gopass show -c "$entry" 2>/dev/null \
-          && notify-send "Password copied" "$entry"
+      entries=$(${pkgs.gopass}/bin/gopass ls --flat 2>/dev/null)
+      entry=$(echo "$entries" | ${pkgs.bemenu}/bin/bemenu -p "gopass:")
+      [ -n "$entry" ] && ${pkgs.gopass}/bin/gopass show -c "$entry" 2>/dev/null \
+          && ${pkgs.libnotify}/bin/notify-send "Password copied" "$entry"
     '';
     executable = true;
   };
@@ -1039,10 +1039,10 @@ in
   home.file.".local/bin/gopass-type.sh" = {
     text = ''
       #!/usr/bin/env bash
-      entries=$(gopass ls --flat 2>/dev/null)
-      entry=$(echo "$entries" | bemenu -p "gopass:")
-      [ -n "$entry" ] && sleep 2 && gopass show -o "$entry" 2>/dev/null | wtype - \
-          && notify-send "Password typed" "$entry"
+      entries=$(${pkgs.gopass}/bin/gopass ls --flat 2>/dev/null)
+      entry=$(echo "$entries" | ${pkgs.bemenu}/bin/bemenu -p "gopass:")
+      [ -n "$entry" ] && sleep 2 && ${pkgs.gopass}/bin/gopass show -o "$entry" 2>/dev/null | ${pkgs.wtype}/bin/wtype - \
+          && ${pkgs.libnotify}/bin/notify-send "Password typed" "$entry"
     '';
     executable = true;
   };
