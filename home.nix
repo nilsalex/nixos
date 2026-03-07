@@ -27,6 +27,8 @@ let
 
   yktotp-jsonapi = pkgs.callPackage ./derivations/yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
 
+  browser-launcher = pkgs.callPackage ./derivations/browser-launcher { pkgs = pkgs; };
+
   mailAccount = "nils" + "@" + "famalex.de";
 
 in
@@ -108,6 +110,7 @@ in
     zig
     zls
     (inkscape-with-extensions.override { inkscapeExtensions = [ inkscape-silhouette ]; })
+    browser-launcher
     glow
     python3
     pyright
@@ -549,6 +552,9 @@ in
 
       # NetworkManager
       bindsym Mod4+c exec ~/.local/bin/nm-menu.sh
+
+      # Browser launcher
+      bindsym Mod4+b exec browser-launcher
 
       # configure gtk
       exec_always configure-gtk
