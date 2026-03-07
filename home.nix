@@ -547,6 +547,9 @@ in
       bindsym Mod4+p exec ~/.local/bin/gopass-menu.sh
       bindsym Mod4+Shift+p exec ~/.local/bin/gopass-type.sh
 
+      # NetworkManager
+      bindsym Mod4+c exec ~/.local/bin/nm-menu.sh
+
       # configure gtk
       exec_always configure-gtk
 
@@ -1043,6 +1046,38 @@ in
       entry=$(echo "$entries" | ${pkgs.bemenu}/bin/bemenu -p "gopass:")
       [ -n "$entry" ] && sleep 2 && ${pkgs.gopass}/bin/gopass show -o "$entry" 2>/dev/null | ${pkgs.wtype}/bin/wtype - \
           && ${pkgs.libnotify}/bin/notify-send "Password typed" "$entry"
+    '';
+    executable = true;
+  };
+
+  home.file.".local/bin/nm-menu.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+      nmcli=${pkgs.networkmanager}/bin/nmcli
+      bemenu=${pkgs.bemenu}/bin/bemenu
+
+      all=$($nmcli -t -f NAME connection)
+      active=$($nmcli -t -f NAME connection show --active)
+
+      entries=""
+      while IFS= read -r conn; do
+        if echo "$active" | grep -q "^''${conn}$"; then
+          entries="$entries$conn [up]"$'\n'
+        else
+          entries="$entries$conn [down]"$'\n'
+        fi
+      done <<< "$all"
+
+      selection=$(echo -n "$entries" | $bemenu -p "Network:")
+      [ -z "$selection" ] && exit 0
+
+      conn=$(echo "$selection" | sed 's/ \[up\]\| \[down\]$//')
+
+      if echo "$selection" | grep -q "\[up\]$"; then
+        $nmcli c down "$conn" && ${pkgs.libnotify}/bin/notify-send "Network" "$conn disconnected"
+      else
+        $nmcli c up "$conn" && ${pkgs.libnotify}/bin/notify-send "Network" "$conn connected"
+      fi
     '';
     executable = true;
   };
