@@ -554,7 +554,7 @@ in
       bindsym Mod4+c exec ~/.local/bin/nm-menu.sh
 
       # Browser launcher
-      bindsym Mod4+b exec browser-launcher
+      bindsym Mod4+g exec browser-launcher
 
       # configure gtk
       exec_always configure-gtk
