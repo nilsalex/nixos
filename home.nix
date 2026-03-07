@@ -135,6 +135,7 @@ in
     gnupg
     opencode
     obs-studio
+    libnotify
   ];
 
   home.sessionVariables =
@@ -537,6 +538,9 @@ in
       # Set output for docked/undocked mode
       bindsym Mod4+Shift+d exec swaymsg 'output "Dell Inc. DELL U2719D 92WTV13" position 0 0' && swaymsg 'output "Dell Inc. DELL U2719D FHMTLS2" position 2560 0' && swaymsg 'output eDP-1 disable'
       bindsym Mod4+Shift+u exec swaymsg 'output "eDP-1" enable'
+
+      # YubiKey OTP
+      bindsym Mod4+o exec ~/.local/bin/yk-otp.sh
 
       # configure gtk
       exec_always configure-gtk
@@ -1003,6 +1007,17 @@ in
 
   home.file.".config/io.datasette.llm/default_model.txt" = {
     text = "chimera";
+  };
+
+  home.file.".local/bin/yk-otp.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+      accounts=$(ykman oath accounts list 2>/dev/null)
+      account=$(echo "$accounts" | bemenu -p "YubiKey OTP:")
+      [ -n "$account" ] && ykman oath accounts code "$account" -s | wl-copy \
+          && notify-send "OTP copied" "$account"
+    '';
+    executable = true;
   };
 
   xdg.portal = {
