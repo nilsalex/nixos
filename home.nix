@@ -136,6 +136,7 @@ in
     opencode
     obs-studio
     libnotify
+    brightnessctl
   ];
 
   home.sessionVariables =
@@ -524,8 +525,8 @@ in
       bindsym Mod4+Control+Shift+h move workspace to output left
 
       # Brightness
-      bindsym XF86MonBrightnessDown exec light -U 5
-      bindsym XF86MonBrightnessUp exec light -A 5
+      bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+      bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 
       # Volume
       bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'

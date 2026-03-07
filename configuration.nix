@@ -116,7 +116,6 @@
     else
       [ ];
 
-  programs.light.enable = true;
   programs.dconf.enable = true;
 
   programs.virt-manager.enable = true;
