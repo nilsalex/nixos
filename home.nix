@@ -86,8 +86,8 @@ in
     grim
     slurp
     gimp
-    freemind
-    freeplane
+    # freemind
+    # freeplane
     feh
     nodejs_24
     tailwindcss-language-server
