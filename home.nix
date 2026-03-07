@@ -543,6 +543,10 @@ in
       # YubiKey OTP
       bindsym Mod4+o exec ~/.local/bin/yk-otp.sh
 
+      # gopass
+      bindsym Mod4+p exec ~/.local/bin/gopass-menu.sh
+      bindsym Mod4+Shift+p exec ~/.local/bin/gopass-type.sh
+
       # configure gtk
       exec_always configure-gtk
 
@@ -1017,6 +1021,28 @@ in
       account=$(echo "$accounts" | bemenu -p "YubiKey OTP:")
       [ -n "$account" ] && ykman oath accounts code "$account" -s | wl-copy \
           && notify-send "OTP copied" "$account"
+    '';
+    executable = true;
+  };
+
+  home.file.".local/bin/gopass-menu.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+      entries=$(gopass ls --flat 2>/dev/null)
+      entry=$(echo "$entries" | bemenu -p "gopass:")
+      [ -n "$entry" ] && gopass show -c "$entry" 2>/dev/null \
+          && notify-send "Password copied" "$entry"
+    '';
+    executable = true;
+  };
+
+  home.file.".local/bin/gopass-type.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+      entries=$(gopass ls --flat 2>/dev/null)
+      entry=$(echo "$entries" | bemenu -p "gopass:")
+      [ -n "$entry" ] && sleep 2 && gopass show -o "$entry" 2>/dev/null | wtype - \
+          && notify-send "Password typed" "$entry"
     '';
     executable = true;
   };
