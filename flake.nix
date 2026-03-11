@@ -6,7 +6,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2";
-    opencode.url = "github:anomalyco/opencode/aae75b3cfb10cdff965fb434c487980b152efdec";
+    opencode.url = "github:anomalyco/opencode";
   };
 
   outputs =
