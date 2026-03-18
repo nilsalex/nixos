@@ -134,7 +134,6 @@ in
     mosh
     csharpier
     tailscale
-    code-cursor-fhs
     gnupg
     opencode
     obs-studio
