@@ -885,7 +885,7 @@ in
   };
 
   programs.claude-code = {
-    enable = true;
+    enable = false;
     settings = {
       env = {
         CLAUDE_CODE_ENABLE_TELEMETRY = "0";
