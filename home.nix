@@ -91,9 +91,9 @@ in
     feh
     nodejs_24
     tailwindcss-language-server
-    nodePackages.typescript-language-server
+    typescript-language-server
     dockerfile-language-server
-    nodePackages.pnpm
+    pnpm
     dotnet-sdk_9
     omnisharp-roslyn
     jetbrains.rider
