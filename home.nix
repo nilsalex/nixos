@@ -686,6 +686,10 @@ in
     }
   '';
 
+  home.file.".config/opencode/AGENTS.md".text = ''
+    You are on NixOS. If executables are missing, try `nix shell nixpkgs#package -c ...` or similar commands.
+  '';
+
   programs.vscode = {
     enable = true;
     profiles.default = {
