@@ -133,6 +133,7 @@ in
     git-absorb
     mosh
     csharpier
+    csharp-ls
     tailscale
     gnupg
     opencode
