@@ -29,11 +29,12 @@ let
 
   browser-launcher = pkgs.callPackage ./derivations/browser-launcher { pkgs = pkgs; };
 
-  # Wrap csharp-ls to use .NET 10 (required by csharp-ls) while keeping dotnet-sdk_9 for development
-  csharp-ls-wrapped = pkgs.writeShellScriptBin "csharp-ls" ''
-    export DOTNET_ROOT="${pkgs.dotnet-sdk_10}/share/dotnet"
-    exec "${pkgs.csharp-ls}/bin/csharp-ls" "$@"
-  '';
+  # Combine .NET SDK 9 and 10 into a single SDK that contains both runtimes
+  # This allows csharp-ls (which needs .NET 10) and .NET 9 projects to coexist
+  dotnet-combined = pkgs.dotnetCorePackages.combinePackages [
+    pkgs.dotnet-sdk_9
+    pkgs.dotnet-sdk_10
+  ];
 
   mailAccount = "nils" + "@" + "famalex.de";
 
@@ -100,7 +101,7 @@ in
     typescript-language-server
     dockerfile-language-server
     pnpm
-    dotnet-sdk_9
+    dotnet-combined
     omnisharp-roslyn
     jetbrains.rider
     tree
@@ -139,7 +140,7 @@ in
     git-absorb
     mosh
     csharpier
-    csharp-ls-wrapped
+    csharp-ls
     tailscale
     gnupg
     opencode
@@ -156,7 +157,7 @@ in
     {
       XDG_DATA_DIRS = schemadir + ":$XDG_DATA_DIRS";
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      DOTNET_ROOT = "${pkgs.dotnet-sdk_9}/share/dotnet";
+      DOTNET_ROOT = "${dotnet-combined}/share/dotnet";
     };
 
   home.shellAliases = {
