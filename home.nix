@@ -29,6 +29,12 @@ let
 
   browser-launcher = pkgs.callPackage ./derivations/browser-launcher { pkgs = pkgs; };
 
+  # Wrap csharp-ls to use .NET 10 (required by csharp-ls) while keeping dotnet-sdk_9 for development
+  csharp-ls-wrapped = pkgs.writeShellScriptBin "csharp-ls" ''
+    export DOTNET_ROOT="${pkgs.dotnet-sdk_10}/share/dotnet"
+    exec "${pkgs.csharp-ls}/bin/csharp-ls" "$@"
+  '';
+
   mailAccount = "nils" + "@" + "famalex.de";
 
 in
@@ -133,7 +139,7 @@ in
     git-absorb
     mosh
     csharpier
-    csharp-ls
+    csharp-ls-wrapped
     tailscale
     gnupg
     opencode
