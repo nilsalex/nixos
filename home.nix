@@ -95,7 +95,6 @@ in
     dockerfile-language-server
     pnpm
     dotnet-sdk_9
-    dotnet-sdk_10
     omnisharp-roslyn
     jetbrains.rider
     tree
