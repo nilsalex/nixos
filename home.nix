@@ -216,7 +216,15 @@ in
     pinentry.package = pkgs.pinentry-gnome3;
   };
 
-  # programs.gpg.enable = true;
+  programs.gpg = {
+    enable = true;
+    scdaemonSettings = {
+      # Enable shared PC/SC mode so both GnuPG and ykman can access YubiKey
+      pcsc-shared = true;
+      # Disable direct CCID to force use of pcscd for better compatibility
+      disable-ccid = true;
+    };
+  };
 
   programs.swaylock = {
     enable = true;
