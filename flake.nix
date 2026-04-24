@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2";
+    neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2-rebased";
   };
 
   outputs =

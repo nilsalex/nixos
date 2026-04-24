@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776777932,
-        "narHash": "sha256-0R3Yow/NzSeVGUke5tL7CCkqmss4Vmi6BbV6idHzq/8=",
+        "lastModified": 1777004352,
+        "narHash": "sha256-SV+9PgNwZ8jHVCjK6YaCBzaheLSW7cDnm5DpOYrD8Vw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5d5640599a0050b994330328b9fd45709c909720",
+        "rev": "6012cf1fed3eba66115f3fd117b9be6bd2a15b2f",
         "type": "github"
       },
       "original": {
@@ -22,16 +22,16 @@
     },
     "neovim-config": {
       "locked": {
-        "lastModified": 1767031229,
-        "narHash": "sha256-IRtcBPyFr6afJnOkO8ZmpOFmVjPSF7WA0WLXiajBmt8=",
+        "lastModified": 1777028657,
+        "narHash": "sha256-ES1sJLj6kgyDQpTBu4hJDbYbv1pMHJHyfZgI7xcAHHY=",
         "owner": "nilsalex",
         "repo": "kickstart.nvim",
-        "rev": "073494facecdcfb724692561a0fc0e38b46d81e3",
+        "rev": "be45e6ea2c4983419878430d59a0ceaf61633954",
         "type": "github"
       },
       "original": {
         "owner": "nilsalex",
-        "ref": "fork-v2",
+        "ref": "fork-v2-rebased",
         "repo": "kickstart.nvim",
         "type": "github"
       }
