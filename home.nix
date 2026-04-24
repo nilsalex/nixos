@@ -68,6 +68,9 @@ in
     wget
     tree-sitter
     wl-clipboard
+    luajitPackages.luarocks
+    lua51Packages.luarocks
+    lua51Packages.lua
     lua-language-server
     stylua
     texlive.combined.scheme-medium
