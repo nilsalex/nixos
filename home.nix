@@ -145,7 +145,7 @@ in
     csharp-ls
     tailscale
     gnupg
-    opencode
+    llm-agents.opencode
     obs-studio
     libnotify
     brightnessctl

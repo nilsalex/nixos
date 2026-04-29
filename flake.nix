@@ -1,11 +1,17 @@
 {
   description = "NixOS configuration";
 
+  nixConfig = {
+    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-trusted-public-keys = [ "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2-rebased";
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs =
@@ -14,6 +20,7 @@
       nixpkgs,
       home-manager,
       neovim-config,
+      llm-agents,
       ...
     }@attrs:
     let
