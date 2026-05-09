@@ -153,6 +153,7 @@ assert _elinksFixReminder;
     libnotify
     brightnessctl
     gh
+    uv
   ];
 
   home.sessionVariables =
