@@ -164,6 +164,7 @@ assert _elinksFixReminder;
       XDG_DATA_DIRS = schemadir + ":$XDG_DATA_DIRS";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       DOTNET_ROOT = "${dotnet-combined}/share/dotnet";
+      PATH = "$HOME/.dotnet/tools:$PATH";
     };
 
   home.shellAliases = {
@@ -750,6 +751,13 @@ assert _elinksFixReminder;
       share = "disabled";
       small_model = "skainet/zai-org/GLM-4.7-Flash";
       mcp = {
+        dotnet-source-mcp = {
+          type = "local";
+          command = [ "dotnet-source-mcp" ];
+          environment = {
+            GITHUB_TOKEN = "{env:GITHUB_TOKEN}";
+          };
+        };
         github = {
           type = "remote";
           url = "https://api.githubcopilot.com/mcp/";
