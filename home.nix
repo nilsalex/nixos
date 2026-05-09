@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
+  _elinksFixReminder = builtins.trace "TODO: revert lynx workaround — elinks is broken in nixos-unstable (nixpkgs#513546), switch back to elinks once nixos-unstable advances past 2026-05-08 (PR #515347)" true;
+
   configure-gtk = pkgs.writeTextFile {
     name = "configure-gtk";
     destination = "/bin/configure-gtk";
@@ -39,6 +41,7 @@ let
   mailAccount = "nils" + "@" + "famalex.de";
 
 in
+assert _elinksFixReminder;
 {
   home.username = "nils";
   home.homeDirectory = "/home/nils";
@@ -130,6 +133,7 @@ in
     kubernetes-helm
     stern
     nixfmt
+    nixd
     npm-groovy-lint
     haskellPackages.fourmolu
     haskellPackages.stack
@@ -145,10 +149,10 @@ in
     csharp-ls
     tailscale
     gnupg
-    llm-agents.opencode
     obs-studio
     libnotify
     brightnessctl
+    gh
   ];
 
   home.sessionVariables =
@@ -165,6 +169,7 @@ in
   home.shellAliases = {
     sway = "sway > ~/.local/var/log/sway.log 2>&1";
     groot = ''cd "$(git root)"'';
+    opencode-gh = ''export GITHUB_TOKEN="$(gh auth token)" && opencode'';
   };
 
   fonts.fontconfig.enable = true;
@@ -704,9 +709,48 @@ in
     }
   '';
 
-  home.file.".config/opencode/AGENTS.md".text = ''
-    You are on NixOS. If executables are missing, try `nix shell nixpkgs#package -c ...` or similar commands.
-  '';
+  programs.opencode = {
+    enable = true;
+    package = pkgs.llm-agents.opencode;
+    context = ''
+      You are on NixOS. If executables are missing, try `nix shell nixpkgs#package -c ...` or similar commands.
+    '';
+    skills = ./skills;
+    settings = {
+      autoshare = false;
+      autoupdate = false;
+      disabled_providers = [ "opencode" ];
+      lsp = { };
+      permission = {
+        bash = "ask";
+        edit = "ask";
+      };
+      plugin = [
+        "@tngtech/opencode-skainet@latest"
+        "superpowers@git+https://github.com/obra/superpowers.git"
+      ];
+      provider = {
+        anthropic.options.baseURL = "https://taia.tngtech.com/proxy/anthropic/v1";
+        deepseek.options.baseURL = "https://taia.tngtech.com/proxy/deepseek";
+        mistral.options.baseURL = "https://taia.tngtech.com/proxy/mistral/v1";
+        openai.options.baseURL = "https://taia.tngtech.com/proxy/openai/v1";
+        xai.options.baseURL = "https://taia.tngtech.com/proxy/x-ai/v1";
+      };
+      share = "disabled";
+      small_model = "skainet/zai-org/GLM-4.7-Flash";
+      mcp = {
+        github = {
+          type = "remote";
+          url = "https://api.githubcopilot.com/mcp/";
+          enabled = true;
+          oauth = false;
+          headers = {
+            Authorization = "Bearer {env:GITHUB_TOKEN}";
+          };
+        };
+      };
+    };
+  };
 
   programs.vscode = {
     enable = true;
@@ -785,8 +829,8 @@ in
   programs.neomutt =
     let
       mailcap_file = pkgs.writeText "mailcap" ''
-        text/html; ${pkgs.elinks}/bin/elinks %s; nametemplate=%s.html
-        text/html; ${pkgs.elinks}/bin/elinks -dump %s; nametemplate=%s.html; copiousoutput
+        text/html; ${pkgs.lynx}/bin/lynx %s; nametemplate=%s.html
+        text/html; ${pkgs.lynx}/bin/lynx -dump %s; nametemplate=%s.html; copiousoutput
         application/pdf; ${pkgs.mupdf}/bin/mupdf %s
         image/*; ${pkgs.feh}/bin/feh %s
       '';
