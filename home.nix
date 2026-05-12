@@ -1,8 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
-  _elinksFixReminder = builtins.trace "TODO: revert lynx workaround — elinks is broken in nixos-unstable (nixpkgs#513546), switch back to elinks once nixos-unstable advances past 2026-05-08 (PR #515347)" true;
-
   configure-gtk = pkgs.writeTextFile {
     name = "configure-gtk";
     destination = "/bin/configure-gtk";
@@ -41,7 +39,6 @@ let
   mailAccount = "nils" + "@" + "famalex.de";
 
 in
-assert _elinksFixReminder;
 {
   home.username = "nils";
   home.homeDirectory = "/home/nils";
@@ -154,6 +151,7 @@ assert _elinksFixReminder;
     brightnessctl
     gh
     uv
+    crit
   ];
 
   home.sessionVariables =

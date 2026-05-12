@@ -12,6 +12,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2-rebased";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    crit.url = "github:tomasz-tomczyk/crit";
   };
 
   outputs =
