@@ -152,6 +152,8 @@ in
     gh
     uv
     crit
+    zoxide
+    fzf
   ];
 
   home.sessionVariables =
@@ -976,6 +978,10 @@ in
         CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
       };
     };
+  };
+
+  programs.zoxide = {
+    enable = true;
   };
 
   services.mbsync = {
