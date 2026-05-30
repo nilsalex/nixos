@@ -5,7 +5,7 @@
     (
       final: prev:
       {
-        crit = crit.packages.${final.system}.default;
+        crit = crit.packages.${final.stdenv.hostPlatform.system}.default;
       }
     )
   ];

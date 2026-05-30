@@ -28,7 +28,6 @@
       mkHost =
         { hostname, hardwareConfig }:
         nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = attrs;
           modules = [
             (import ./overlays.nix)
