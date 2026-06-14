@@ -154,6 +154,8 @@ in
     crit
     zoxide
     fzf
+    bubblewrap
+    inotify-info
   ];
 
   home.sessionVariables =
