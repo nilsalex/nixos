@@ -41,6 +41,7 @@
                 {
                   imports = [
                     neovim-config.homeManagerModules.neovim
+                    ./modules/opencode.nix
                     ./home.nix
                   ];
                 };
