@@ -37,6 +37,14 @@
   networking.firewall = {
     enable = true;
     allowedUDPPorts = [ 24727 ];
+    extraCommands = ''
+      iptables -I FORWARD -i br+ -j ACCEPT
+      iptables -I FORWARD -o br+ -j ACCEPT
+    '';
+    extraStopCommands = ''
+      iptables -D FORWARD -i br+ -j ACCEPT || true
+      iptables -D FORWARD -o br+ -j ACCEPT || true
+    '';
   };
 
   powerManagement.enable = true;
