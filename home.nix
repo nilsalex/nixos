@@ -75,7 +75,7 @@ in
     lua51Packages.lua
     lua-language-server
     stylua
-    texlive.combined.scheme-medium
+    texliveMedium
     mupdf
     xdg-utils
     slack

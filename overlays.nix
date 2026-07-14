@@ -1,7 +1,7 @@
 { llm-agents, crit, ... }:
 {
   nixpkgs.overlays = [
-    llm-agents.overlays.default
+    llm-agents.overlays.shared-nixpkgs
     (
       final: prev:
       {
