@@ -159,6 +159,7 @@ in
     fzf
     bubblewrap
     inotify-info
+    llm-agents.nono
   ];
 
   home.sessionVariables =
