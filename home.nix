@@ -160,6 +160,7 @@ in
     bubblewrap
     inotify-info
     llm-agents.nono
+    libsecret
   ];
 
   home.sessionVariables =
@@ -224,6 +225,11 @@ in
     vimAlias = true;
     withRuby = false;
     withPython3 = false;
+  };
+
+  services.gnome-keyring = {
+    enable = true;
+    components = [ "secrets" ];
   };
 
   services.gpg-agent = {
