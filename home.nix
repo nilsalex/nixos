@@ -1085,7 +1085,7 @@ in
           xai.options.baseURL = "https://taia.tngtech.com/proxy/x-ai/v1";
         };
         share = "disabled";
-        small_model = "skainet/zai-org/GLM-4.7-Flash";
+        small_model = "trustedtokens/Qwen/Qwen3.6-35B-A3B-FP8";
         # mcp = {
         #   dotnet-source-mcp = {
         #     type = "local";
