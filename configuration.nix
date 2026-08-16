@@ -49,8 +49,9 @@
 
   hardware.logitech.wireless = {
     enable = true;
-    enableGraphical = true;
   };
+
+  programs.solaar.enable = true;
 
   time.timeZone = "Europe/Berlin";
 
