@@ -139,6 +139,7 @@ in
     haskellPackages.stack
     haskellPackages.cabal-install
     ghostty
+    handy
     vscode-langservers-extracted
     ausweisapp
     urlscan
@@ -594,8 +595,14 @@ in
       # Browser launcher
       bindsym Mod4+g exec browser-launcher
 
+      # Handy speech-to-text (global shortcut capture is broken on sway;
+      # signal the running instance instead, see Handy issue #1870)
+      bindsym Ctrl+space exec pkill -USR2 -x handy
+      bindsym Ctrl+Shift+space exec pkill -USR1 -x handy
+
       # configure gtk
       exec_always configure-gtk
+      exec handy --start-hidden
 
       exec_always systemctl --user restart kanshi.service
     '';
