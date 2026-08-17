@@ -597,8 +597,7 @@ in
 
       # Handy speech-to-text (global shortcut capture is broken on sway;
       # signal the running instance instead, see Handy issue #1870)
-      bindsym Ctrl+space exec pkill -USR2 -x handy
-      bindsym Ctrl+Shift+space exec pkill -USR1 -x handy
+      bindsym Ctrl+space exec handy --toggle-transcription
 
       # configure gtk
       exec_always configure-gtk
