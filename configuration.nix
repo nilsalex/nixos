@@ -74,11 +74,11 @@
     package = pkgs.nixVersions.latest;
     settings = {
       allowed-users = [ "nils" ];
-      trusted-public-keys = [
+      extra-trusted-public-keys = [
         "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
         "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       ];
-      substituters = [
+      extra-substituters = [
         "https://cache.iog.io"
         "https://cache.numtide.com"
       ];
