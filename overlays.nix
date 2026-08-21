@@ -1,12 +1,6 @@
-{ llm-agents, crit, ... }:
+{ llm-agents, ... }:
 {
   nixpkgs.overlays = [
     llm-agents.overlays.shared-nixpkgs
-    (
-      final: prev:
-      {
-        crit = crit.packages.${final.stdenv.hostPlatform.system}.default;
-      }
-    )
   ];
 }

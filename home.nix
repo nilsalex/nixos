@@ -155,7 +155,6 @@ in
     brightnessctl
     gh
     uv
-    crit
     zoxide
     fzf
     bubblewrap
