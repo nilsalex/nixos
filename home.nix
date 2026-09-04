@@ -160,6 +160,8 @@ in
     bubblewrap
     inotify-info
     llm-agents.nono
+    llm-agents.pi
+    llm-agents.herdr
     libsecret
   ];
 
