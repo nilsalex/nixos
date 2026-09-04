@@ -63,10 +63,6 @@
       "wheel"
       "video"
       "networkmanager"
-      "libvirtd"
-      "kvm"
-      "qemu-libvirtd"
-      "docker"
     ];
   };
 
@@ -184,7 +180,11 @@
 
   virtualisation.spiceUSBRedirection.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
