@@ -33,6 +33,8 @@ let
 
   browser-launcher = pkgs.callPackage ./derivations/browser-launcher { pkgs = pkgs; };
 
+  microsandbox = pkgs.callPackage ./derivations/microsandbox { };
+
   # Combine .NET SDK 9 and 10 into a single SDK that contains both runtimes
   # This allows csharp-ls (which needs .NET 10) and .NET 9 projects to coexist
   dotnet-combined = pkgs.dotnetCorePackages.combinePackages [
@@ -163,6 +165,7 @@ in
     llm-agents.pi
     llm-agents.herdr
     libsecret
+    microsandbox
   ];
 
   home.sessionVariables =
@@ -1059,17 +1062,17 @@ in
       context = ''
         You are on NixOS. If executables are missing, try `nix shell nixpkgs#package -c ...` or similar commands.
       '';
-        #
-        # ## Impact assessment before design
-        #
-        # Before proposing approaches for any new feature, improvement, or optimization, quantify the concrete benefit:
-        # - What specific metric improves?
-        # - By how much?
-        # - Who benefits and in what scenario?
-        #
-        # If the benefit is vague or zero, recommend not doing it. "Do nothing" is always a valid option — evaluate it with the same rigor as any proposed approach.
-        #
-        # Don't let conceptual elegance (cleaner separation, better abstraction) override a lack of practical improvement.
+      #
+      # ## Impact assessment before design
+      #
+      # Before proposing approaches for any new feature, improvement, or optimization, quantify the concrete benefit:
+      # - What specific metric improves?
+      # - By how much?
+      # - Who benefits and in what scenario?
+      #
+      # If the benefit is vague or zero, recommend not doing it. "Do nothing" is always a valid option — evaluate it with the same rigor as any proposed approach.
+      #
+      # Don't let conceptual elegance (cleaner separation, better abstraction) override a lack of practical improvement.
       # skills = ./skills;
       skills = null;
       settings = {

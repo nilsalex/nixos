@@ -16,10 +16,12 @@ let
     if builtins.isList base && builtins.isList override then
       base ++ override
     else if builtins.isAttrs base && builtins.isAttrs override then
-      lib.zipAttrsWith (_name: vals: builtins.foldl' mergeWithListConcat (builtins.head vals) (builtins.tail vals)) [
-        base
-        override
-      ]
+      lib.zipAttrsWith
+        (_name: vals: builtins.foldl' mergeWithListConcat (builtins.head vals) (builtins.tail vals))
+        [
+          base
+          override
+        ]
     else
       override;
 in
@@ -93,19 +95,20 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ cfg.package ] ++ (
-      lib.mapAttrsToList (
-        name: _profile:
-        let
-          dir = "$HOME/.config/opencode-${name}";
-        in
-        pkgs.writeShellScriptBin "opencode-${name}" ''
-          export OPENCODE_CONFIG="${dir}/opencode.json"
-          export OPENCODE_CONFIG_DIR="${dir}"
-          exec ${lib.getExe cfg.package} "$@"
-        ''
-      ) cfg.profiles
-    );
+    home.packages = [
+      cfg.package
+    ]
+    ++ (lib.mapAttrsToList (
+      name: _profile:
+      let
+        dir = "$HOME/.config/opencode-${name}";
+      in
+      pkgs.writeShellScriptBin "opencode-${name}" ''
+        export OPENCODE_CONFIG="${dir}/opencode.json"
+        export OPENCODE_CONFIG_DIR="${dir}"
+        exec ${lib.getExe cfg.package} "$@"
+      ''
+    ) cfg.profiles);
 
     xdg.configFile = builtins.listToAttrs (
       lib.flatten (
@@ -114,7 +117,16 @@ in
           let
             dir = "opencode-${name}";
             parent = if profile.extends != null then cfg.profiles.${profile.extends} else null;
-            base = if parent != null then parent else { settings = { }; context = ""; skills = null; tui = { }; };
+            base =
+              if parent != null then
+                parent
+              else
+                {
+                  settings = { };
+                  context = "";
+                  skills = null;
+                  tui = { };
+                };
             settings = mergeWithListConcat base.settings profile.settings;
             context = if profile.context != "" then profile.context else base.context;
             skills = if profile.skills != null then profile.skills else base.skills;
@@ -126,8 +138,7 @@ in
               { "$schema" = "https://opencode.ai/config.json"; } // settings
             );
           }
-          ++
-          lib.optional (context != "") (
+          ++ lib.optional (context != "") (
             if lib.isPath context then
               {
                 name = "${dir}/AGENTS.md";
@@ -139,16 +150,14 @@ in
                 value.text = context;
               }
           )
-          ++
-          lib.optional (skills != null) {
+          ++ lib.optional (skills != null) {
             name = "${dir}/skills";
             value = {
               source = skills;
               recursive = true;
             };
           }
-          ++
-          lib.optional (tui != { }) {
+          ++ lib.optional (tui != { }) {
             name = "${dir}/tui.json";
             value.source = jsonFormat.generate "tui-${name}.json" (
               { "$schema" = "https://opencode.ai/tui.json"; } // tui
