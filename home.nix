@@ -166,6 +166,7 @@ in
     llm-agents.herdr
     libsecret
     microsandbox
+    obsidian
   ];
 
   home.sessionVariables =
