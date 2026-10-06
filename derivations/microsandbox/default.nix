@@ -10,12 +10,12 @@
 let
   sources = {
     "x86_64-linux" = {
-      url = "https://github.com/superradcompany/microsandbox/releases/download/v0.6.18/microsandbox-linux-x86_64.tar.gz";
-      hash = "sha256-sAGzxrmAqx/8zrgXSWZIwVINuja54MqsN+qNL0rNm90=";
+      url = "https://github.com/superradcompany/microsandbox/releases/download/v0.7.7/microsandbox-linux-x86_64.tar.gz";
+      hash = "sha256-s8xKXj9S392Tim9nrEqalZ3f4wS6tW3klkBEuGE/Abs=";
     };
     "aarch64-linux" = {
-      url = "https://github.com/superradcompany/microsandbox/releases/download/v0.6.18/microsandbox-linux-aarch64.tar.gz";
-      hash = "sha256-5TCY52Af3dha9+lD1K89Q3Cs4nbZ6GOolFYzjy0HbRs=";
+      url = "https://github.com/superradcompany/microsandbox/releases/download/v0.7.7/microsandbox-linux-aarch64.tar.gz";
+      hash = "sha256-iZex6nbeWGifttD6ezKvb76MvCRhLaQLFopbQzx9gxg=";
     };
   };
 
@@ -28,7 +28,7 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "microsandbox";
-  version = "0.6.18";
+  version = "0.7.7";
 
   src = fetchurl {
     inherit (source) url hash;
