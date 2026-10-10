@@ -1,7 +1,6 @@
 { hostname, hardwareConfig }:
 
 { config, pkgs, ... }:
-
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -107,6 +106,12 @@
     "/share/xdg-desktop-portal"
   ];
 
+  # Make Electron apps (Slack, VS Code, Obsidian) run native Wayland under
+  # every Wayland session. X11-only apps fall back to XWayland: sway's
+  # built-in support, or xwayland-satellite under niri (installed by the
+  # home-manager niri module).
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   security.polkit.enable = true;
   security.rtkit.enable = true;
   security.pam.services.swaylock.text = "auth include login";
@@ -118,6 +123,28 @@
       [ ];
 
   programs.dconf.enable = true;
+
+  programs.niri.enable = true;
+
+  # Register sway as a fallback session for the greeter. Niri (the primary)
+  # is registered by programs.niri, which also mkDefault's defaultSession to
+  # "niri" — greetd ignores that setting, so tuigreet alone decides (with
+  # --remember-session persisting the last manual choice).
+  services.displayManager.sessionPackages = [ pkgs.sway ];
+
+  services.greetd = {
+    enable = true;
+    # tuigreet is a text-based greeter; this binds greetd to tty1 with
+    # TTYReset/TTYVHangup and journals stderr, so boot/systemd messages can't
+    # clobber the TUI on VT1.
+    useTextGreeter = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session";
+        user = "greeter";
+      };
+    };
+  };
 
   programs.virt-manager.enable = true;
 

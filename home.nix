@@ -72,6 +72,7 @@ in
     wget
     tree-sitter
     wl-clipboard
+    playerctl
     lua51Packages.luarocks
     lua51Packages.lua
     lua-language-server
@@ -113,6 +114,7 @@ in
     tree
     ncdu
     wtype
+    wlopm
     fuzzel
     jq
     libreoffice
@@ -273,9 +275,13 @@ in
           "sway/workspaces"
           "sway/mode"
           "sway/scratchpad"
+          "niri/workspaces"
           "custom/media"
         ];
-        modules-center = [ "sway/window" ];
+        modules-center = [
+          "sway/window"
+          "niri/window"
+        ];
         modules-right = [
           "mpd"
           "idle_inhibitor"
@@ -285,6 +291,7 @@ in
           "memory"
           "keyboard-state"
           "sway/language"
+          "niri/language"
           "battery"
           "battery#bat2"
           "clock"
@@ -434,8 +441,8 @@ in
     timeouts = [
       {
         timeout = 120;
-        command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
-        resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+        command = "${pkgs.wlopm}/bin/wlopm --off '*'";
+        resumeCommand = "${pkgs.wlopm}/bin/wlopm --on '*'";
       }
       {
         timeout = 300;
@@ -613,6 +620,496 @@ in
     wrapperFeatures = {
       base = true;
       gtk = true;
+    };
+  };
+
+  wayland.windowManager.niri = {
+    enable = true;
+    systemd.enable = true;
+    settings = {
+      prefer-no-csd = { };
+      hotkey-overlay.skip-at-startup = { };
+      input.keyboard = {
+        numlock = { };
+        xkb.options = "compose:ralt";
+      };
+      binds = {
+        # Programs
+        "Mod+T" = {
+          _props.hotkey-overlay-title = "Open a Terminal";
+          spawn = [ "kitty" ];
+        };
+        "Mod+D" = {
+          _props.hotkey-overlay-title = "Run an Application: fuzzel";
+          spawn = [ "fuzzel" ];
+        };
+        "Mod+Shift+S" = {
+          _props.hotkey-overlay-title = "Lock the Screen";
+          spawn = [ "swaylock" ];
+        };
+        "Super+Alt+L" = {
+          _props.hotkey-overlay-title = "Lock the Screen";
+          spawn = [ "swaylock" ];
+        };
+
+        # Windows and columns
+        "Mod+Shift+Slash".show-hotkey-overlay = { };
+        "Mod+Q" = {
+          _props.repeat = false;
+          close-window = { };
+        };
+        "Mod+O" = {
+          _props.repeat = false;
+          toggle-overview = { };
+        };
+        "Mod+H" = {
+          focus-column-left = { };
+        };
+        "Mod+J" = {
+          focus-window-down = { };
+        };
+        "Mod+K" = {
+          focus-window-up = { };
+        };
+        "Mod+L" = {
+          focus-column-right = { };
+        };
+        "Mod+Left" = {
+          focus-column-left = { };
+        };
+        "Mod+Down" = {
+          focus-window-down = { };
+        };
+        "Mod+Up" = {
+          focus-window-up = { };
+        };
+        "Mod+Right" = {
+          focus-column-right = { };
+        };
+        "Mod+Ctrl+H" = {
+          move-column-left = { };
+        };
+        "Mod+Ctrl+J" = {
+          move-window-down = { };
+        };
+        "Mod+Ctrl+K" = {
+          move-window-up = { };
+        };
+        "Mod+Ctrl+L" = {
+          move-column-right = { };
+        };
+        "Mod+Ctrl+Left" = {
+          move-column-left = { };
+        };
+        "Mod+Ctrl+Down" = {
+          move-window-down = { };
+        };
+        "Mod+Ctrl+Up" = {
+          move-window-up = { };
+        };
+        "Mod+Ctrl+Right" = {
+          move-column-right = { };
+        };
+        "Mod+Home" = {
+          focus-column-first = { };
+        };
+        "Mod+End" = {
+          focus-column-last = { };
+        };
+        "Mod+Ctrl+Home" = {
+          move-column-to-first = { };
+        };
+        "Mod+Ctrl+End" = {
+          move-column-to-last = { };
+        };
+
+        # Monitors (workspace to monitor replaces sway's move workspace to output)
+        "Mod+Shift+H" = {
+          focus-monitor-left = { };
+        };
+        "Mod+Shift+J" = {
+          focus-monitor-down = { };
+        };
+        "Mod+Shift+K" = {
+          focus-monitor-up = { };
+        };
+        "Mod+Shift+L" = {
+          focus-monitor-right = { };
+        };
+        "Mod+Shift+Left" = {
+          focus-monitor-left = { };
+        };
+        "Mod+Shift+Down" = {
+          focus-monitor-down = { };
+        };
+        "Mod+Shift+Up" = {
+          focus-monitor-up = { };
+        };
+        "Mod+Shift+Right" = {
+          focus-monitor-right = { };
+        };
+        "Mod+Ctrl+Shift+H" = {
+          move-column-to-monitor-left = { };
+        };
+        "Mod+Ctrl+Shift+J" = {
+          move-column-to-monitor-down = { };
+        };
+        "Mod+Ctrl+Shift+K" = {
+          move-column-to-monitor-up = { };
+        };
+        "Mod+Ctrl+Shift+L" = {
+          move-column-to-monitor-right = { };
+        };
+        "Mod+Ctrl+Shift+Left" = {
+          move-column-to-monitor-left = { };
+        };
+        "Mod+Ctrl+Shift+Down" = {
+          move-column-to-monitor-down = { };
+        };
+        "Mod+Ctrl+Shift+Up" = {
+          move-column-to-monitor-up = { };
+        };
+        "Mod+Ctrl+Shift+Right" = {
+          move-column-to-monitor-right = { };
+        };
+
+        # Workspaces
+        "Mod+U" = {
+          focus-workspace-down = { };
+        };
+        "Mod+I" = {
+          focus-workspace-up = { };
+        };
+        "Mod+Page_Down" = {
+          focus-workspace-down = { };
+        };
+        "Mod+Page_Up" = {
+          focus-workspace-up = { };
+        };
+        "Mod+Ctrl+U" = {
+          move-column-to-workspace-down = { };
+        };
+        "Mod+Ctrl+I" = {
+          move-column-to-workspace-up = { };
+        };
+        "Mod+Ctrl+Page_Down" = {
+          move-column-to-workspace-down = { };
+        };
+        "Mod+Ctrl+Page_Up" = {
+          move-column-to-workspace-up = { };
+        };
+        "Mod+Shift+U" = {
+          move-workspace-down = { };
+        };
+        "Mod+Shift+I" = {
+          move-workspace-up = { };
+        };
+        "Mod+Shift+Page_Down" = {
+          move-workspace-down = { };
+        };
+        "Mod+Shift+Page_Up" = {
+          move-workspace-up = { };
+        };
+
+        # Mouse wheel
+        "Mod+WheelScrollDown" = {
+          _props.cooldown-ms = 150;
+          focus-workspace-down = { };
+        };
+        "Mod+WheelScrollUp" = {
+          _props.cooldown-ms = 150;
+          focus-workspace-up = { };
+        };
+        "Mod+Ctrl+WheelScrollDown" = {
+          _props.cooldown-ms = 150;
+          move-column-to-workspace-down = { };
+        };
+        "Mod+Ctrl+WheelScrollUp" = {
+          _props.cooldown-ms = 150;
+          move-column-to-workspace-up = { };
+        };
+        "Mod+WheelScrollLeft" = {
+          focus-column-left = { };
+        };
+        "Mod+WheelScrollRight" = {
+          focus-column-right = { };
+        };
+        "Mod+Shift+WheelScrollDown" = {
+          focus-column-right = { };
+        };
+        "Mod+Shift+WheelScrollUp" = {
+          focus-column-left = { };
+        };
+        "Mod+Ctrl+WheelScrollLeft" = {
+          move-column-left = { };
+        };
+        "Mod+Ctrl+WheelScrollRight" = {
+          move-column-right = { };
+        };
+        "Mod+Ctrl+Shift+WheelScrollDown" = {
+          move-column-right = { };
+        };
+        "Mod+Ctrl+Shift+WheelScrollUp" = {
+          move-column-left = { };
+        };
+
+        # Workspace indices
+        "Mod+1" = {
+          focus-workspace = [ 1 ];
+        };
+        "Mod+2" = {
+          focus-workspace = [ 2 ];
+        };
+        "Mod+3" = {
+          focus-workspace = [ 3 ];
+        };
+        "Mod+4" = {
+          focus-workspace = [ 4 ];
+        };
+        "Mod+5" = {
+          focus-workspace = [ 5 ];
+        };
+        "Mod+6" = {
+          focus-workspace = [ 6 ];
+        };
+        "Mod+7" = {
+          focus-workspace = [ 7 ];
+        };
+        "Mod+8" = {
+          focus-workspace = [ 8 ];
+        };
+        "Mod+9" = {
+          focus-workspace = [ 9 ];
+        };
+        "Mod+Ctrl+1" = {
+          move-column-to-workspace = [ 1 ];
+        };
+        "Mod+Ctrl+2" = {
+          move-column-to-workspace = [ 2 ];
+        };
+        "Mod+Ctrl+3" = {
+          move-column-to-workspace = [ 3 ];
+        };
+        "Mod+Ctrl+4" = {
+          move-column-to-workspace = [ 4 ];
+        };
+        "Mod+Ctrl+5" = {
+          move-column-to-workspace = [ 5 ];
+        };
+        "Mod+Ctrl+6" = {
+          move-column-to-workspace = [ 6 ];
+        };
+        "Mod+Ctrl+7" = {
+          move-column-to-workspace = [ 7 ];
+        };
+        "Mod+Ctrl+8" = {
+          move-column-to-workspace = [ 8 ];
+        };
+        "Mod+Ctrl+9" = {
+          move-column-to-workspace = [ 9 ];
+        };
+
+        # Column layout
+        "Mod+BracketLeft" = {
+          consume-or-expel-window-left = { };
+        };
+        "Mod+BracketRight" = {
+          consume-or-expel-window-right = { };
+        };
+        "Mod+Comma" = {
+          consume-window-into-column = { };
+        };
+        "Mod+Period" = {
+          expel-window-from-column = { };
+        };
+        "Mod+R" = {
+          switch-preset-column-width = { };
+        };
+        "Mod+Shift+R" = {
+          switch-preset-column-width-back = { };
+        };
+        "Mod+Ctrl+Shift+R" = {
+          switch-preset-window-height = { };
+        };
+        "Mod+Ctrl+R" = {
+          reset-window-height = { };
+        };
+        "Mod+F" = {
+          maximize-column = { };
+        };
+        "Mod+Shift+F" = {
+          fullscreen-window = { };
+        };
+        "Mod+M" = {
+          maximize-window-to-edges = { };
+        };
+        "Mod+Ctrl+F" = {
+          expand-column-to-available-width = { };
+        };
+        "Mod+C" = {
+          center-column = { };
+        };
+        "Mod+Ctrl+C" = {
+          center-visible-columns = { };
+        };
+        "Mod+Minus" = {
+          set-column-width = [ "-10%" ];
+        };
+        "Mod+Equal" = {
+          set-column-width = [ "+10%" ];
+        };
+        "Mod+Shift+Minus" = {
+          set-window-height = [ "-10%" ];
+        };
+        "Mod+Shift+Equal" = {
+          set-window-height = [ "+10%" ];
+        };
+        "Mod+V" = {
+          toggle-window-floating = { };
+        };
+        "Mod+Shift+V" = {
+          switch-focus-between-floating-and-tiling = { };
+        };
+        "Mod+W" = {
+          toggle-column-tabbed-display = { };
+        };
+
+        # Screenshots
+        "Print" = {
+          screenshot = { };
+        };
+        "Ctrl+Print" = {
+          screenshot-screen = { };
+        };
+        "Alt+Print" = {
+          screenshot-window = { };
+        };
+
+        # Quit and inhibitors
+        "Mod+Escape" = {
+          _props.allow-inhibiting = false;
+          toggle-keyboard-shortcuts-inhibit = { };
+        };
+        "Mod+Shift+E" = {
+          quit = { };
+        };
+        "Ctrl+Alt+Delete" = {
+          quit = { };
+        };
+        "Mod+Shift+P" = {
+          _props.hotkey-overlay-title = "Power Off Monitors";
+          power-off-monitors = { };
+        };
+
+        # Brightness
+        "XF86MonBrightnessDown" = {
+          _props.allow-when-locked = true;
+          spawn = [
+            "brightnessctl"
+            "set"
+            "5%-"
+          ];
+        };
+        "XF86MonBrightnessUp" = {
+          _props.allow-when-locked = true;
+          spawn = [
+            "brightnessctl"
+            "set"
+            "+5%"
+          ];
+        };
+
+        # Volume
+        "XF86AudioRaiseVolume" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "pactl set-sink-volume @DEFAULT_SINK@ +1%";
+        };
+        "XF86AudioLowerVolume" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "pactl set-sink-volume @DEFAULT_SINK@ -1%";
+        };
+        "XF86AudioMute" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        };
+        "XF86AudioMicMute" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+        };
+
+        # Media keys
+        "XF86AudioPlay" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "playerctl play-pause";
+        };
+        "XF86AudioStop" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "playerctl stop";
+        };
+        "XF86AudioPrev" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "playerctl previous";
+        };
+        "XF86AudioNext" = {
+          _props.allow-when-locked = true;
+          spawn-sh = "playerctl next";
+        };
+
+        # YubiKey OTP
+        "Mod+Shift+o" = {
+          _props.hotkey-overlay-title = "YubiKey OTP";
+          spawn-sh = "$HOME/.local/bin/yk-otp.sh";
+        };
+
+        # gopass
+        "Mod+p" = {
+          spawn-sh = "$HOME/.local/bin/gopass-menu.sh";
+        };
+        "Mod+Ctrl+p" = {
+          spawn-sh = "$HOME/.local/bin/gopass-type.sh";
+        };
+
+        # NetworkManager
+        "Mod+n" = {
+          spawn-sh = "$HOME/.local/bin/nm-menu.sh";
+        };
+
+        # Browser launcher
+        "Mod+g" = {
+          spawn = [ "browser-launcher" ];
+        };
+
+        # Handy speech-to-text
+        "Alt+Space" = {
+          spawn = [
+            "handy"
+            "--toggle-transcription"
+          ];
+        };
+      };
+      _children = [
+        { spawn-at-startup._args = [ "waybar" ]; }
+        { spawn-at-startup._args = [ "configure-gtk" ]; }
+        {
+          spawn-at-startup._args = [
+            "handy"
+            "--start-hidden"
+          ];
+        }
+        {
+          window-rule._children = [
+            {
+              match._props = {
+                app-id = "firefox$";
+                title = "^Picture-in-Picture$";
+              };
+              open-floating = {
+                _args = [ true ];
+              };
+            }
+          ];
+        }
+      ];
     };
   };
 
