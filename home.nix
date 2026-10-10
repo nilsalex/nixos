@@ -1159,6 +1159,11 @@ in
         ControlPath = "~/.ssh/master-%r@%n:%p";
         ControlPersist = "no";
       };
+      "*.msb" = {
+        User = "root";
+        StrictHostKeyChecking = "accept-new";
+        ProxyCommand = ''sh -c 'exec msb ssh serve "''\${1%%.msb}" --stdio' _ %h'';
+      };
     };
   };
 
