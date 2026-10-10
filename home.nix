@@ -60,7 +60,6 @@ in
     noto-fonts-cjk-sans
     dejavu_fonts
     liberation_ttf
-    bemenu
     prusa-slicer
     gcc
     dejavu_fonts
@@ -114,6 +113,7 @@ in
     tree
     ncdu
     wtype
+    fuzzel
     jq
     libreoffice
     tenv
@@ -549,7 +549,7 @@ in
           xkb_options = "compose:ralt";
         };
       };
-      menu = "bemenu-run";
+      menu = "fuzzel";
       fonts = {
         names = [ "FiraCode Nerd Font" ];
       };
@@ -1156,7 +1156,7 @@ in
     text = ''
       #!/usr/bin/env bash
       accounts=$(${pkgs.yubikey-manager}/bin/ykman oath accounts list 2>/dev/null)
-      account=$(echo "$accounts" | ${pkgs.bemenu}/bin/bemenu -i -p "YubiKey OTP:")
+      account=$(echo "$accounts" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "YubiKey OTP:")
       [ -n "$account" ] && ${pkgs.yubikey-manager}/bin/ykman oath accounts code "$account" -s | ${pkgs.wl-clipboard}/bin/wl-copy \
           && ${pkgs.libnotify}/bin/notify-send "OTP copied" "$account"
     '';
@@ -1167,7 +1167,7 @@ in
     text = ''
       #!/usr/bin/env bash
       entries=$(${pkgs.gopass}/bin/gopass ls --flat 2>/dev/null)
-      entry=$(echo "$entries" | ${pkgs.bemenu}/bin/bemenu -i -p "gopass:")
+      entry=$(echo "$entries" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "gopass:")
       [ -n "$entry" ] && ${pkgs.gopass}/bin/gopass show -c "$entry" 2>/dev/null \
           && ${pkgs.libnotify}/bin/notify-send "Password copied" "$entry"
     '';
@@ -1178,7 +1178,7 @@ in
     text = ''
       #!/usr/bin/env bash
       entries=$(${pkgs.gopass}/bin/gopass ls --flat 2>/dev/null)
-      entry=$(echo "$entries" | ${pkgs.bemenu}/bin/bemenu -i -p "gopass:")
+      entry=$(echo "$entries" | ${pkgs.fuzzel}/bin/fuzzel --dmenu -p "gopass:")
       [ -n "$entry" ] && sleep 2 && ${pkgs.gopass}/bin/gopass show -o "$entry" 2>/dev/null | ${pkgs.wtype}/bin/wtype - \
           && ${pkgs.libnotify}/bin/notify-send "Password typed" "$entry"
     '';
@@ -1189,7 +1189,7 @@ in
     text = ''
       #!/usr/bin/env bash
       nmcli=${pkgs.networkmanager}/bin/nmcli
-      bemenu=${pkgs.bemenu}/bin/bemenu
+      menu=${pkgs.fuzzel}/bin/fuzzel
 
       all=$($nmcli -t -f NAME connection)
       active=$($nmcli -t -f NAME connection show --active)
@@ -1203,7 +1203,7 @@ in
         fi
       done <<< "$all"
 
-      selection=$(echo -n "$entries" | $bemenu -i -p "Network:")
+      selection=$(echo -n "$entries" | $menu --dmenu -p "Network:")
       [ -z "$selection" ] && exit 0
 
       conn=$(echo "$selection" | sed 's/ \[up\]\| \[down\]$//')

@@ -81,10 +81,9 @@ def call_llm(config, query, memory):
         return f"https://www.google.com/search?q={query}"
 
 
-def bemenu_prompt():
+def menu_prompt():
     result = subprocess.run(
-        ["bemenu", "-i", "-p", "Open:"],
-        input="",
+        ["fuzzel", "--dmenu", "--prompt-only", "Open:"],
         capture_output=True,
         text=True,
     )
@@ -96,7 +95,7 @@ def open_browser(url):
 
 
 def cmd_launch(args):
-    query = args.query if args.query else bemenu_prompt()
+    query = args.query if args.query else menu_prompt()
     if not query:
         return
 
@@ -151,7 +150,7 @@ def main():
     subparsers = parser.add_subparsers(dest="command")
 
     launch_parser = subparsers.add_parser("launch", help="Launch browser (default)")
-    launch_parser.add_argument("query", nargs="?", help="Query (opens bemenu if not provided)")
+    launch_parser.add_argument("query", nargs="?", help="Query (opens fuzzel if not provided)")
     launch_parser.set_defaults(func=cmd_launch)
 
     teach_parser = subparsers.add_parser("teach", help="Teach a new shortcut")
