@@ -1162,6 +1162,7 @@ in
       "*.msb" = {
         User = "root";
         StrictHostKeyChecking = "accept-new";
+        UserKnownHostsFile = "~/.ssh/msb_known_hosts";
         ProxyCommand = ''sh -c 'exec msb ssh serve "''\${1%%.msb}" --stdio' _ %h'';
       };
     };
