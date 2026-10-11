@@ -1386,6 +1386,26 @@ in
           key = "\\CO";
           action = "sidebar-open";
         }
+        {
+          map = [ "index" ];
+          key = "N";
+          action = "search-opposite";
+        }
+        {
+          map = [ "index" ];
+          key = "\\en";
+          action = "toggle-new";
+        }
+        {
+          map = [ "index" ];
+          key = "?";
+          action = "search-reverse";
+        }
+        {
+          map = [ "index" ];
+          key = "<f1>";
+          action = "help";
+        }
       ];
       macros = [
         {
