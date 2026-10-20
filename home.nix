@@ -266,22 +266,124 @@ in
 
   programs.waybar = {
     enable = true;
+    # replaces waybar's bundled demo theme (white/colored module chips);
+    # picked up automatically by both the sway and niri configs
+    style = ''
+      * {
+        font-family: "FiraCode Nerd Font", "Noto Color Emoji", sans-serif;
+        font-size: 13px;
+        border: none;
+        border-radius: 0;
+        min-height: 0;
+      }
+
+      window#waybar {
+        background-color: rgba(22, 24, 28, 0.95);
+        color: #c5c8ce;
+      }
+
+      #clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray,
+      #idle_inhibitor, #mpd, #language, #workspaces, #workspaces button,
+      #window {
+        background: transparent;
+        color: #c5c8ce;
+        padding: 0 8px;
+      }
+
+      #window, #workspaces {
+        margin: 0 4px;
+      }
+
+      .modules-left > widget:first-child > #workspaces {
+        margin-left: 0;
+      }
+
+      #workspaces button {
+        padding: 1px 7px;
+        margin: 2px 2px;
+        border: none;
+        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.06);
+      }
+
+      #workspaces button.empty {
+        color: #565c68;
+      }
+
+      #workspaces button:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+
+      /* filled accent chip for the current workspace */
+      #workspaces button.focused,
+      #workspaces button.active {
+        background-color: #6a90d8;
+        color: #16191f;
+      }
+
+      #workspaces button.urgent {
+        background-color: #f7768e;
+        color: #16191f;
+      }
+
+      /* app icons inside a workspace button */
+      #workspaces button .niri-taskbar-btn {
+        padding: 0;
+        margin: 0 1px;
+        border: 1px solid transparent;
+        border-radius: 9px;
+      }
+
+      #workspaces button .niri-taskbar-btn:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      /* focused window icon within a workspace */
+      #workspaces button .niri-taskbar-btn.focused {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-color: rgba(255, 255, 255, 0.95);
+      }
+
+      #battery.charging, #battery.plugged {
+        color: #9ece6a;
+      }
+
+      #battery.warning {
+        color: #e0af68;
+      }
+
+      #battery.critical:not(.charging) {
+        color: #f7768e;
+      }
+
+      #pulseaudio.muted {
+        color: #6a7080;
+      }
+
+      #network.disconnected {
+        color: #f7768e;
+      }
+
+      #cpu, #memory, #network, #language {
+        color: #c5c8ce;
+      }
+
+      label:focus {
+        background: transparent;
+      }
+    '';
     settings = [
       {
         position = "bottom";
-        height = 16;
+        height = 24;
         spacing = 4;
         modules-left = [
           "sway/workspaces"
           "sway/mode"
           "sway/scratchpad"
-          "niri/workspaces"
           "custom/media"
         ];
-        modules-center = [
-          "sway/window"
-          "niri/window"
-        ];
+        modules-center = [ "sway/window" ];
         modules-right = [
           "mpd"
           "idle_inhibitor"
@@ -291,7 +393,6 @@ in
           "memory"
           "keyboard-state"
           "sway/language"
-          "niri/language"
           "battery"
           "battery#bat2"
           "clock"
@@ -432,6 +533,70 @@ in
       }
     ];
   };
+
+  # Second waybar config for the niri session. Reuses the sway bar's shared
+  # module config and swaps in niri modules; started via niri's
+  # spawn-at-startup with `-c ~/.config/waybar/config-niri`.
+  xdg.configFile."waybar/config-niri".source = (pkgs.formats.json { }).generate "waybar-config-niri" [
+    (let
+      # drop the null defaults home-manager's bar options inject
+      withoutNulls = pkgs.lib.filterAttrs (_: v: v != null) (builtins.head config.programs.waybar.settings);
+    in
+    builtins.removeAttrs withoutNulls [
+      "sway/mode"
+      "sway/scratchpad"
+    ] // {
+      modules-left = [
+        "niri/workspaces"
+        "custom/media"
+      ];
+      modules-center = [ "niri/window" ];
+      modules-right = [
+        "mpd"
+        "idle_inhibitor"
+        "pulseaudio"
+        "network"
+        "cpu"
+        "memory"
+        "keyboard-state"
+        "niri/language"
+        "battery"
+        "battery#bat2"
+        "clock"
+        "tray"
+      ];
+      "niri/workspaces" = {
+        # {icon} is the workspace number itself unless a state icon matches
+        # (see the module man page example); with the taskbar enabled the
+        # number label is replaced by the windows' icons anyway
+        format = "{icon}";
+        format-icons = {
+          focused = "●";
+          urgent = "!";
+        };
+        enable-bar-scroll = true;
+        # shows clickable app icons of the windows in each workspace
+        workspace-taskbar = {
+          enable = true;
+          icon-size = 14;
+        };
+        window-rewrite-default = "□";
+        window-rewrite = {
+          "app_id<firefox>" = "🦊";
+          "app_id<google-chrome>" = "🌐";
+          "app_id<kitty>" = "❯";
+          "app_id<spotify>" = "♪";
+          "app_id<Code>" = "‹/›";
+        };
+      };
+      "niri/window" = {
+        # show each monitor's own focused window (multi-monitor via kanshi)
+        separate-outputs = true;
+        max-length = 50;
+      };
+      "niri/language".format = "{short}";
+    })
+  ];
 
   services.swayidle = {
     enable = true;
@@ -629,10 +794,19 @@ in
     settings = {
       prefer-no-csd = { };
       hotkey-overlay.skip-at-startup = { };
-      input.keyboard = {
-        numlock = { };
-        xkb.options = "compose:ralt";
+      input = {
+        keyboard = {
+          numlock = { };
+          xkb.options = "compose:ralt";
+        };
+        # Mod+N jumps back to the previously active workspace,
+        # like Alt+Tab for workspaces
+        workspace-auto-back-and-forth = { };
+        # focus windows under the cursor; don't scroll-into-oblivion when
+        # hovering windows while scrolling
+        focus-follows-mouse._props.max-scroll-amount = "5%";
       };
+      debug.disable-cursor-plane = { };
       binds = {
         # Programs
         "Mod+T" = {
@@ -1088,7 +1262,60 @@ in
         };
       };
       _children = [
-        { spawn-at-startup._args = [ "waybar" ]; }
+        # scale set natively so there's no kanshi race where the bar
+        # (spawned before kanshi) renders unscaled; kanshi still handles
+        # docked/undocked profiles
+        { output = { _args = [ "eDP-1" ]; scale = 1.3; }; }
+        # never leak the bar into screen shares/recordings (idea from
+        # github.com/maxhbr/myconfig); matches all waybar layer surfaces
+        {
+          layer-rule._children = [
+            {
+              match._props.namespace = "waybar";
+              block-out-from._args = [ "screen-capture" ];
+            }
+          ];
+        }
+        # hide notifications from screen shares (screencast-only: they stay
+        # visible in niri's own screenshot tool)
+        {
+          layer-rule._children = [
+            {
+              match._props.namespace = "notifications";
+              block-out-from._args = [ "screencast" ];
+            }
+          ];
+        }
+        # hide slack and in-browser Teams/Zoom tabs from screen shares
+        # (app_id seen in niri IPC: "slack", "google-chrome"); one rule
+        # because multiple match entries are OR'd by niri
+        {
+          window-rule._children = [
+            { match._props.app-id = "slack"; }
+            {
+              match._props = {
+                app-id = "google-chrome";
+                # "Microsoft Teams" verbatim; Zoom as "Zoom ..." at the start
+                # or "... - Zoom ..." (e.g. "Join Meeting - Zoom")
+                title = "(?i)(microsoft teams|(?:^|- )zoom)";
+              };
+            }
+            {
+              match._props = {
+                app-id = "kitty";
+                title = "(?i)\\b(neo)?mutt\\b";
+              };
+            }
+            { block-out-from._args = [ "screencast" ]; }
+          ];
+        }
+        {
+          spawn-at-startup._args = [
+            "waybar"
+            "-c"
+            "${config.home.homeDirectory}/.config/waybar/config-niri"
+          ];
+        }
         { spawn-at-startup._args = [ "configure-gtk" ]; }
         {
           spawn-at-startup._args = [
