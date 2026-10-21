@@ -163,6 +163,7 @@ in
     fzf
     bubblewrap
     inotify-info
+    llm-agents.opencode
     llm-agents.nono
     llm-agents.pi
     llm-agents.herdr
@@ -186,7 +187,6 @@ in
   home.shellAliases = {
     sway = "sway > ~/.local/var/log/sway.log 2>&1";
     groot = ''cd "$(git root)"'';
-    # opencode-gh = ''export GITHUB_TOKEN="$(gh auth token)" && opencode'';
   };
 
   fonts.fontconfig.enable = true;
@@ -1336,6 +1336,15 @@ in
             }
           ];
         }
+        # float omac approval/terminal windows
+        {
+          window-rule._children = [
+            {
+              match._props.title = "^omac: ";
+              open-floating._args = [ true ];
+            }
+          ];
+        }
       ];
     };
   };
@@ -1796,77 +1805,6 @@ in
           }
       }
     '';
-  };
-
-  programs.opencode-profiles = {
-    enable = true;
-    package = pkgs.llm-agents.opencode;
-    profiles.super = {
-      extends = "default";
-      settings = {
-        plugin = [
-          "superpowers@git+https://github.com/obra/superpowers.git"
-        ];
-      };
-    };
-    profiles.default = {
-      context = ''
-        You are on NixOS. If executables are missing, try `nix shell nixpkgs#package -c ...` or similar commands.
-      '';
-      #
-      # ## Impact assessment before design
-      #
-      # Before proposing approaches for any new feature, improvement, or optimization, quantify the concrete benefit:
-      # - What specific metric improves?
-      # - By how much?
-      # - Who benefits and in what scenario?
-      #
-      # If the benefit is vague or zero, recommend not doing it. "Do nothing" is always a valid option — evaluate it with the same rigor as any proposed approach.
-      #
-      # Don't let conceptual elegance (cleaner separation, better abstraction) override a lack of practical improvement.
-      # skills = ./skills;
-      skills = null;
-      settings = {
-        autoshare = false;
-        autoupdate = false;
-        disabled_providers = [ "opencode" ];
-        lsp = { };
-        permission = {
-          bash = "ask";
-          edit = "ask";
-        };
-        plugin = [
-          "@tngtech/opencode-skainet@latest"
-        ];
-        provider = {
-          anthropic.options.baseURL = "https://taia.tngtech.com/proxy/anthropic/v1";
-          deepseek.options.baseURL = "https://taia.tngtech.com/proxy/deepseek";
-          mistral.options.baseURL = "https://taia.tngtech.com/proxy/mistral/v1";
-          openai.options.baseURL = "https://taia.tngtech.com/proxy/openai/v1";
-          xai.options.baseURL = "https://taia.tngtech.com/proxy/x-ai/v1";
-        };
-        share = "disabled";
-        small_model = "trustedtokens/Qwen/Qwen3.6-35B-A3B-FP8";
-        # mcp = {
-        #   dotnet-source-mcp = {
-        #     type = "local";
-        #     command = [ "dotnet-source-mcp" ];
-        #     environment = {
-        #       GITHUB_TOKEN = "{env:GITHUB_TOKEN}";
-        #     };
-        #   };
-        #   github = {
-        #     type = "remote";
-        #     url = "https://api.githubcopilot.com/mcp/";
-        #     enabled = true;
-        #     oauth = false;
-        #     headers = {
-        #       Authorization = "Bearer {env:GITHUB_TOKEN}";
-        #     };
-        #   };
-        # };
-      };
-    };
   };
 
   home.file.".config/io.datasette.llm/extra-openai-models.yaml" = {
