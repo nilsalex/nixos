@@ -23,25 +23,5 @@
         doInstallCheck = false;
       });
     })
-
-    # v4l2loopback: pass INSTALL_MOD_PATH via installFlags with DEPMOD=true
-    # instead of patching the Makefile — fixes the modules.devname conflict
-    # (nixpkgs#575851, nixpkgs PR #575861). Drop once nixos-unstable has it.
-    (final: prev: {
-      linuxPackages = prev.linuxPackages.extend (_: lprev: {
-        v4l2loopback = lprev.v4l2loopback.overrideAttrs (old: {
-          preBuild = builtins.replaceStrings
-            [
-              ''substituteInPlace Makefile --replace-fail "modules_install" "INSTALL_MOD_PATH=$out modules_install"''
-            ]
-            [ "" ]
-            old.preBuild;
-          installFlags = [
-            "DEPMOD=true"
-            "INSTALL_MOD_PATH=${placeholder "out"}"
-          ];
-        });
-      });
-    })
   ];
 }
