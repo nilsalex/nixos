@@ -538,64 +538,69 @@ in
   # module config and swaps in niri modules; started via niri's
   # spawn-at-startup with `-c ~/.config/waybar/config-niri`.
   xdg.configFile."waybar/config-niri".source = (pkgs.formats.json { }).generate "waybar-config-niri" [
-    (let
-      # drop the null defaults home-manager's bar options inject
-      withoutNulls = pkgs.lib.filterAttrs (_: v: v != null) (builtins.head config.programs.waybar.settings);
-    in
-    builtins.removeAttrs withoutNulls [
-      "sway/mode"
-      "sway/scratchpad"
-    ] // {
-      modules-left = [
-        "niri/workspaces"
-        "custom/media"
-      ];
-      modules-center = [ "niri/window" ];
-      modules-right = [
-        "mpd"
-        "idle_inhibitor"
-        "pulseaudio"
-        "network"
-        "cpu"
-        "memory"
-        "keyboard-state"
-        "niri/language"
-        "battery"
-        "battery#bat2"
-        "clock"
-        "tray"
-      ];
-      "niri/workspaces" = {
-        # {icon} is the workspace number itself unless a state icon matches
-        # (see the module man page example); with the taskbar enabled the
-        # number label is replaced by the windows' icons anyway
-        format = "{icon}";
-        format-icons = {
-          focused = "●";
-          urgent = "!";
+    (
+      let
+        # drop the null defaults home-manager's bar options inject
+        withoutNulls = pkgs.lib.filterAttrs (_: v: v != null) (
+          builtins.head config.programs.waybar.settings
+        );
+      in
+      builtins.removeAttrs withoutNulls [
+        "sway/mode"
+        "sway/scratchpad"
+      ]
+      // {
+        modules-left = [
+          "niri/workspaces"
+          "custom/media"
+        ];
+        modules-center = [ "niri/window" ];
+        modules-right = [
+          "mpd"
+          "idle_inhibitor"
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+          "keyboard-state"
+          "niri/language"
+          "battery"
+          "battery#bat2"
+          "clock"
+          "tray"
+        ];
+        "niri/workspaces" = {
+          # {icon} is the workspace number itself unless a state icon matches
+          # (see the module man page example); with the taskbar enabled the
+          # number label is replaced by the windows' icons anyway
+          format = "{icon}";
+          format-icons = {
+            focused = "●";
+            urgent = "!";
+          };
+          enable-bar-scroll = true;
+          # shows clickable app icons of the windows in each workspace
+          workspace-taskbar = {
+            enable = true;
+            icon-size = 14;
+          };
+          window-rewrite-default = "□";
+          window-rewrite = {
+            "app_id<firefox>" = "🦊";
+            "app_id<google-chrome>" = "🌐";
+            "app_id<kitty>" = "❯";
+            "app_id<spotify>" = "♪";
+            "app_id<Code>" = "‹/›";
+          };
         };
-        enable-bar-scroll = true;
-        # shows clickable app icons of the windows in each workspace
-        workspace-taskbar = {
-          enable = true;
-          icon-size = 14;
+        "niri/window" = {
+          # show each monitor's own focused window (multi-monitor via kanshi)
+          separate-outputs = true;
+          max-length = 50;
         };
-        window-rewrite-default = "□";
-        window-rewrite = {
-          "app_id<firefox>" = "🦊";
-          "app_id<google-chrome>" = "🌐";
-          "app_id<kitty>" = "❯";
-          "app_id<spotify>" = "♪";
-          "app_id<Code>" = "‹/›";
-        };
-      };
-      "niri/window" = {
-        # show each monitor's own focused window (multi-monitor via kanshi)
-        separate-outputs = true;
-        max-length = 50;
-      };
-      "niri/language".format = "{short}";
-    })
+        "niri/language".format = "{short}";
+      }
+    )
   ];
 
   services.swayidle = {
@@ -772,8 +777,9 @@ in
       # Browser launcher
       bindsym Mod4+g exec browser-launcher
 
-      # Handy speech-to-text (global shortcut capture is broken on sway;
-      # signal the running instance instead, see Handy issue #1870)
+      # Handy speech-to-text (in-app global shortcut capture doesn't work on
+      # Wayland compositors; the CLI binding is the upstream-canonical method,
+      # see Handy issue #1870)
       bindsym Alt+space exec handy --toggle-transcription
 
       # configure gtk
@@ -1265,7 +1271,12 @@ in
         # scale set natively so there's no kanshi race where the bar
         # (spawned before kanshi) renders unscaled; kanshi still handles
         # docked/undocked profiles
-        { output = { _args = [ "eDP-1" ]; scale = 1.3; }; }
+        {
+          output = {
+            _args = [ "eDP-1" ];
+            scale = 1.3;
+          };
+        }
         # never leak the bar into screen shares/recordings (idea from
         # github.com/maxhbr/myconfig); matches all waybar layer surfaces
         {
