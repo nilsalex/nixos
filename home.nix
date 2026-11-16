@@ -170,6 +170,8 @@ in
     libsecret
     microsandbox
     obsidian
+    lima
+    openssl
   ];
 
   home.sessionVariables =
