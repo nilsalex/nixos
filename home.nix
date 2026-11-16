@@ -164,7 +164,7 @@ in
     bubblewrap
     inotify-info
     llm-agents.opencode
-    llm-agents.nono
+    # llm-agents.nono
     llm-agents.pi
     llm-agents.herdr
     libsecret
