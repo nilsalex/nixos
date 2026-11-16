@@ -1,0 +1,31 @@
+# Start with:
+#   nix build .#img --out-link result-vm
+#   limactl start lima.yaml
+images:
+  - location: "./result-vm/nixos.qcow2"
+    arch: "x86_64"
+
+mounts:
+- location: "~/.config/litellm"
+  mountPoint: "/var/lib/litellm"
+  writable: false
+  9p:
+    cache: "mmap"
+- location: "/tmp/lima"
+  writable: true
+  9p:
+    cache: "mmap"
+
+memory: 8GiB
+
+portForwards:
+  # Tell Lima's port-forwarding to ignore port 68 to prevent interception of host DHCP packets
+  # See: https://github.com/nixos-lima/nixos-lima/issues/50
+  - proto: udp
+    guestPort: 68
+    guestIP: 0.0.0.0
+    ignore: true
+
+containerd:
+  system: false
+  user: false
