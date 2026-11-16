@@ -30,7 +30,6 @@
           specialArgs = attrs;
           modules = [
             (import ./overlays.nix)
-            (import ./modules/litellm.nix)
             (import ./configuration.nix { inherit hostname hardwareConfig; })
             home-manager.nixosModules.home-manager
             {
