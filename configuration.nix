@@ -62,6 +62,7 @@
       "wheel"
       "video"
       "networkmanager"
+      "kvm"
     ];
   };
 
@@ -209,8 +210,17 @@
 
   virtualisation.podman = {
     enable = true;
-    dockerCompat = true;
+    dockerCompat = false;
+    dockerSocket.enable = false;
     defaultNetwork.settings.dns_enabled = true;
+  };
+
+  virtualisation.docker = {
+    enable = false;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
   };
 
   # This value determines the NixOS release from which the default

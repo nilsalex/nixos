@@ -172,6 +172,8 @@ in
     obsidian
     lima
     openssl
+    docker-compose
+    docker-sbx
   ];
 
   home.sessionVariables =
@@ -605,23 +607,42 @@ in
     )
   ];
 
-  services.swayidle = {
-    enable = true;
-    events = {
-      "before-sleep" = "${pkgs.swaylock}/bin/swaylock -f";
+  services.swayidle =
+    let
+      # wlopm speaks wlr-output-power-management, which sway implements but
+      # niri does not (yet: niri-wm/niri#3192). Under niri, use its IPC action
+      # instead (niri also powers monitors back on on input by itself).
+      dpms =
+        mode:
+        pkgs.writeShellScript "dpms-${mode}" ''
+          if ${pkgs.niri}/bin/niri msg action power-${mode}-monitors 2>/dev/null; then
+            :
+          else
+            ${pkgs.wlopm}/bin/wlopm --${mode} '*'
+          fi
+        '';
+    in
+    {
+      enable = true;
+      events = {
+        "before-sleep" = "${pkgs.swaylock}/bin/swaylock -f";
+      };
+      timeouts = [
+        {
+          timeout = 120;
+          command = "${dpms "off"}";
+          resumeCommand = "${dpms "on"}";
+        }
+        {
+          timeout = 300;
+          command = "${pkgs.swaylock}/bin/swaylock -f";
+        }
+        {
+          timeout = 600;
+          command = "${pkgs.systemd}/bin/systemctl suspend";
+        }
+      ];
     };
-    timeouts = [
-      {
-        timeout = 120;
-        command = "${pkgs.wlopm}/bin/wlopm --off '*'";
-        resumeCommand = "${pkgs.wlopm}/bin/wlopm --on '*'";
-      }
-      {
-        timeout = 300;
-        command = "${pkgs.swaylock}/bin/swaylock -f";
-      }
-    ];
-  };
 
   services.kanshi = {
     enable = true;
