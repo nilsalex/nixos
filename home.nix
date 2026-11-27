@@ -1603,6 +1603,9 @@ in
       enable = true;
       create = "maildir";
     };
+    msmtp = {
+      enable = true;
+    };
     notmuch = {
       enable = true;
       neomutt.enable = true;
