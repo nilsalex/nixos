@@ -101,6 +101,12 @@ in
         name: path: "${name}:${path}"
       ) config.my.mail.mbsyncCredentials;
       ExecStart = "${pkgs.isync}/bin/mbsync -c /home/nils/.config/isyncrc --all";
+      # mbsync creates Maildir files with mode 0600, which masks inherited
+      # ACLs. Re-apply the shared group ACL after every sync.
+      ExecStartPost = [
+        "+${pkgs.acl}/bin/setfacl -R -m g:mail:rwX /var/lib/mail/nils"
+        "+${pkgs.acl}/bin/setfacl -R -d -m g:mail:rwX /var/lib/mail/nils"
+      ];
     };
   };
 
