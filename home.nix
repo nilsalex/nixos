@@ -260,7 +260,7 @@ in
     enable = true;
     defaultCacheTtl = 86400;
     maxCacheTtl = 86400;
-    pinentry.package = pkgs.pinentry-gnome3;
+    pinentry.package = pkgs.pinentry-egui;
   };
 
   programs.gpg = {
@@ -1360,6 +1360,15 @@ in
         { spawn-at-startup._args = [ "configure-gtk" ]; }
         {
           spawn-at-startup._args = [
+            "dbus-update-activation-environment"
+            "--systemd"
+            "WAYLAND_DISPLAY"
+            "DISPLAY"
+            "XDG_CURRENT_DESKTOP=niri"
+          ];
+        }
+        {
+          spawn-at-startup._args = [
             "handy"
             "--start-hidden"
           ];
@@ -1449,18 +1458,16 @@ in
     text = ''
       #!/bin/sh
 
-      export GPG_TTY="$(tty)"
-
       if [ -f ~/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
-      	source ~/.gpg-agent-info
-      	export GPG_AGENT_INFO
+        source ~/.gpg-agent-info
+        export GPG_AGENT_INFO
       else
-      	eval $(gpg-agent --daemon)
+        eval $(gpg-agent --daemon)
       fi
 
-      ${pkgs.gopass-jsonapi}/bin/gopass-jsonapi listen
+      export GPG_TTY="$(tty)"
 
-      exit $?
+      exec ${pkgs.gopass-jsonapi}/bin/gopass-jsonapi listen
     '';
     executable = true;
   };
