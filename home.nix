@@ -51,11 +51,14 @@ let
   # gopass and prompt interactively.
   mailPasswordCommand = toString (
     pkgs.writeShellScript "mail-password" ''
-      if [ -n "''${CREDENTIALS_DIRECTORY:-}" ] && [ -r "$CREDENTIALS_DIRECTORY/personal" ]; then
-        cat "$CREDENTIALS_DIRECTORY/personal"
-      else
-        exec ${pkgs.gopass}/bin/gopass show -o personal/email/${mailAccount}
+      # In the system mbsync service, only use the systemd credential. If it is
+      # missing, fail instead of silently falling back to gopass.
+      if [ -n "''${CREDENTIALS_DIRECTORY:-}" ]; then
+        exec ${pkgs.coreutils}/bin/cat "$CREDENTIALS_DIRECTORY/personal"
       fi
+
+      # Interactive/manual runs (mbsync/msmtp as nils) use gopass.
+      exec ${pkgs.gopass}/bin/gopass show -o personal/email/${mailAccount}
     ''
   );
 
