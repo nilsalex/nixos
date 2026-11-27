@@ -1590,6 +1590,9 @@ in
     };
     neomutt = {
       enable = true;
+      # neomutt already passes -f itself; --read-envelope-from conflicts with it
+      # and makes msmtp exit with code 64.
+      sendMailCommand = "msmtpq --read-recipients";
       extraMailboxes = [
         "Drafts"
         "Junk"
