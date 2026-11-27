@@ -1,10 +1,25 @@
 { hostname, hardwareConfig }:
 
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  baseSopsSecret = config.my.mail.sopsMbsync && builtins.pathExists ./secrets/mail.yaml;
+in
+{
+  # The personal host enables this by default. The work wrapper extends the
+  # alexntng host and opts in explicitly once it has its own sops secret.
+  my.mail.sopsMbsync = lib.mkDefault (hostname == "linux");
+
   nixpkgs.config.allowUnfree = true;
 
-  imports = [ hardwareConfig ];
+  imports = [
+    hardwareConfig
+    ./modules/mail.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -42,6 +57,84 @@
   services.thermald.enable = true;
   services.tlp.enable = true;
 
+  # Machine-consumed secrets (e.g. mail passwords) come from sops-nix so
+  # mbsync/msmtp never invoke gpg-agent. The decryption key is a local age key,
+  # generated once with `age-keygen -o /var/lib/sops-nix/key.txt`.
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+
+  sops.secrets = lib.mkIf baseSopsSecret {
+    "mail-password" = {
+      sopsFile = ./secrets/mail.yaml;
+      # Root-only; only the mbsync service receives it, via LoadCredential.
+      mode = "0400";
+    };
+  };
+
+  my.mail.mbsyncCredentials = lib.mkIf baseSopsSecret {
+    personal = config.sops.secrets."mail-password".path;
+  };
+
+  users.groups.mail = { };
+
+  # Dedicated account for the background mail sync. It shares the Maildir with
+  # nils through the `mail` group, but is the only user that can read the
+  # mail password.
+  users.users.mbsync = {
+    isSystemUser = true;
+    group = "mail";
+    home = "/var/lib/mbsync";
+    createHome = true;
+    description = "mbsync mail synchronization";
+  };
+
+  systemd.services.mbsync = lib.mkIf config.my.mail.sopsMbsync {
+    description = "mbsync mailbox synchronization";
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "mbsync";
+      Group = "mail";
+      UMask = "0007";
+      Environment = [ "HOME=/var/lib/mbsync" ];
+      LoadCredential = lib.mapAttrsToList (
+        name: path: "${name}:${path}"
+      ) config.my.mail.mbsyncCredentials;
+      ExecStart = "${pkgs.isync}/bin/mbsync -c /home/nils/.config/isyncrc --all";
+    };
+  };
+
+  systemd.timers.mbsync = lib.mkIf config.my.mail.sopsMbsync {
+    description = "mbsync mailbox synchronization";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*:0/5";
+      Unit = "mbsync.service";
+    };
+  };
+
+  # Hosts that don't use the sops/dedicated-user setup keep the old
+  # home-manager user service (which is what the work wrapper relies on).
+  home-manager.users.nils.services.mbsync.enable = !config.my.mail.sopsMbsync;
+
+  # Keep the shared Maildir writable by both nils and the mbsync user. The
+  # default ACL makes new files/directories inherit group write as well.
+  system.activationScripts.maildir-permissions = lib.mkIf config.my.mail.sopsMbsync {
+    deps = [ "users" ];
+    text = ''
+      ${pkgs.coreutils}/bin/install -d -o root -g mail -m 0750 /var/lib/mail
+      ${pkgs.coreutils}/bin/install -d -o nils -g mail -m 2770 /var/lib/mail/nils
+      ${pkgs.coreutils}/bin/chgrp -R mail /var/lib/mail/nils
+      ${pkgs.coreutils}/bin/chmod -R g+rwX /var/lib/mail/nils
+      ${pkgs.acl}/bin/setfacl -R -m g:mail:rwX /var/lib/mail/nils
+      ${pkgs.acl}/bin/setfacl -R -d -m g:mail:rwX /var/lib/mail/nils
+      ${pkgs.acl}/bin/setfacl -m u:mbsync:x /home/nils
+      if [ -d /home/nils/.config ]; then
+        ${pkgs.acl}/bin/setfacl -m u:mbsync:x /home/nils/.config
+      fi
+    '';
+  };
+
   hardware.graphics.enable = true;
 
   hardware.bluetooth.enable = true;
@@ -63,6 +156,7 @@
       "video"
       "networkmanager"
       "kvm"
+      "mail"
     ];
   };
 

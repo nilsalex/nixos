@@ -1,6 +1,8 @@
 {
   pkgs,
   config,
+  lib,
+  osConfig,
   ...
 }:
 
@@ -43,6 +45,21 @@ let
   ];
 
   mailAccount = "nils" + "@" + "famalex.de";
+
+  useSopsMbsync = osConfig.my.mail.sopsMbsync or false;
+
+  # The background mbsync service reads the password from its systemd
+  # credentials directory. Manual runs (mbsync/msmtp as nils) fall back to
+  # gopass and prompt interactively.
+  mailPasswordCommand = toString (
+    pkgs.writeShellScript "mail-password" ''
+      if [ -n "''${CREDENTIALS_DIRECTORY:-}" ] && [ -r "$CREDENTIALS_DIRECTORY/personal" ]; then
+        cat "$CREDENTIALS_DIRECTORY/personal"
+      else
+        exec ${pkgs.gopass}/bin/gopass show -o personal/email/${mailAccount}
+      fi
+    ''
+  );
 
 in
 {
@@ -1548,12 +1565,16 @@ in
     enable = true;
   };
 
+  # Shared with the dedicated mbsync user through the `mail` group. Hosts
+  # that don't enable the sops-backed mbsync setup keep the normal ~/Maildir.
+  accounts.email.maildirBasePath = lib.mkIf useSopsMbsync "/var/lib/mail/nils";
+
   accounts.email.accounts.personal = {
     primary = true;
     address = mailAccount;
     realName = "Nils Alex";
     userName = mailAccount;
-    passwordCommand = "${pkgs.gopass}/bin/gopass show -o personal/email/nils@famalex.de";
+    passwordCommand = mailPasswordCommand;
     imap = {
       host = "mail.your-server.de";
       port = 993;
@@ -1746,10 +1767,6 @@ in
   };
 
   programs.zoxide = {
-    enable = true;
-  };
-
-  services.mbsync = {
     enable = true;
   };
 

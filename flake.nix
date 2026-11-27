@@ -12,6 +12,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-config.url = "github:nilsalex/kickstart.nvim/fork-v2-rebased";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -21,6 +23,7 @@
       home-manager,
       neovim-config,
       llm-agents,
+      sops-nix,
       ...
     }@attrs:
     let
@@ -31,6 +34,7 @@
           modules = [
             (import ./overlays.nix)
             (import ./configuration.nix { inherit hostname hardwareConfig; })
+            sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
