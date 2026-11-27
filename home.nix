@@ -824,6 +824,9 @@ in
       prefer-no-csd = { };
       hotkey-overlay.skip-at-startup = { };
       input = {
+        # Let systemd-logind handle the power button (HandlePowerKey=poweroff)
+        # instead of niri suspending on it.
+        disable-power-key-handling = { };
         keyboard = {
           numlock = { };
           xkb.options = "compose:ralt";
