@@ -33,8 +33,6 @@ let
 
   yktotp-jsonapi = pkgs.callPackage ./derivations/yktotp/yktotp-jsonapi.nix { pkgs = pkgs; };
 
-  browser-launcher = pkgs.callPackage ./derivations/browser-launcher { pkgs = pkgs; };
-
   microsandbox = pkgs.callPackage ./derivations/microsandbox { };
 
   # Combine .NET SDK 9 and 10 into a single SDK that contains both runtimes
@@ -143,7 +141,6 @@ in
     zig
     zls
     (inkscape-with-extensions.override { inkscapeExtensions = [ inkscape-silhouette ]; })
-    browser-launcher
     glow
     python3
     pyright
@@ -164,12 +161,10 @@ in
     vscode-langservers-extracted
     ausweisapp
     urlscan
-    llm
     git-absorb
     mosh
     csharpier
     csharp-ls
-    tailscale
     gnupg
     obs-studio
     libnotify
@@ -814,9 +809,6 @@ in
       # NetworkManager
       bindsym Mod4+c exec ~/.local/bin/nm-menu.sh
 
-      # Browser launcher
-      bindsym Mod4+g exec browser-launcher
-
       # Handy speech-to-text (in-app global shortcut capture doesn't work on
       # Wayland compositors; the CLI binding is the upstream-canonical method,
       # see Handy issue #1870)
@@ -1295,11 +1287,6 @@ in
         # NetworkManager
         "Mod+n" = {
           spawn-sh = "$HOME/.local/bin/nm-menu.sh";
-        };
-
-        # Browser launcher
-        "Mod+g" = {
-          spawn = [ "browser-launcher" ];
         };
 
         # Handy speech-to-text
@@ -1859,39 +1846,6 @@ in
           }
       }
     '';
-  };
-
-  home.file.".config/io.datasette.llm/extra-openai-models.yaml" = {
-    text = ''
-      - model_id: chimera
-        model_name: tngtech/DeepSeek-TNG-R1T2-Chimera
-        api_base: "https://chat.model.tngtech.com/v1"
-        api_key_name: tng-ai-token
-        can_stream: true
-      - model_id: llama-3.3-70b
-        model_name: meta-llama/Llama-3.3-70B-Instruct
-        api_base: "https://chat.model.tngtech.com/v1"
-        api_key_name: tng-ai-token
-        can_stream: true
-      - model_id: deepseek
-        model_name: deepseek-ai/DeepSeek-R1-Distill-Qwen-32B
-        api_base: "https://chat.model.tngtech.com/v1"
-        api_key_name: tng-ai-token
-        can_stream: true
-      - model_id: gpt-4o
-        model_name: gpt-4o
-        api_base: "https://taia.tngtech.com/proxy/openai/v1"
-        api_key_name: tng-ai-token
-        can_stream: true
-    '';
-  };
-
-  home.file.".config/io.datasette.llm/logs-off" = {
-    text = "";
-  };
-
-  home.file.".config/io.datasette.llm/default_model.txt" = {
-    text = "chimera";
   };
 
   home.file.".local/bin/yk-otp.sh" = {
