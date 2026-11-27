@@ -207,6 +207,18 @@ in
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   security.polkit.enable = true;
+
+  # Allow nils to trigger the dedicated mbsync unit from neomutt without
+  # exposing the sops credentials or requiring an interactive polkit prompt.
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (action.id == "org.freedesktop.systemd1.manage-units" &&
+          action.lookup("unit") == "mbsync.service" &&
+          subject.user == "nils") {
+        return polkit.Result.YES;
+      }
+    });
+  '';
   security.rtkit.enable = true;
   security.pam.services.swaylock.text = "auth include login";
 

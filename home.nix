@@ -1702,7 +1702,7 @@ in
             "pager"
           ];
           key = "<f5>";
-          action = "<shell-escape>${pkgs.isync}/bin/mbsync -V -a<enter>";
+          action = "<shell-escape>${pkgs.systemd}/bin/systemctl start --wait mbsync.service<enter>";
         }
         {
           map = [ "index" ];
